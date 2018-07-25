@@ -18,13 +18,14 @@ def provisioning():
 def openvswitch():
     return render_template('openvswitch.html')
 
-@app.route('/provisioning/api')
+@app.route('/provisioning/api', methods = ['POST'])
 def openvswitch_api():
-    data = request.form.to_dict(flat=True)
+    data = request.get_json() ##tidak support atau belum support form di dashboard
     
     if data["device-type"] == "openvswitch":
-        os.system('ansible-playbook /opt/PureFlow/ansible/playbook/openvswitch/openvswitch.yaml --ask-pass --extra-vars "host=%s user=%s controller=%s bridge=%s"'%(data["device-ip"],data["username"],data["controller"],data["bridge"]))
-
+        os.system('ansible-playbook -u %s -i %s, /opt/PureFlow/ansible/playbook/openvswitch/openvswitch.yaml --extra-vars "controller=%s bridge=%s"'%(data["username"],data["device-ip"],data["controller"],data["bridge"]))
+        return "success!"
+        
 if __name__ == '__main__':
     app.run(host="0.0.0.0", port=4000, debug=True)
 

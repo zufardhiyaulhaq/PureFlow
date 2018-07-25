@@ -1,5 +1,4 @@
-- hosts: {{ host }}
-  remote_user: {{ username }}
+- hosts: all
   tasks:
     - name: Provisioning OpenVSwitch
-      command: ovs-vsctl set-controller {{ bridge }} tcp:{{ controller }}:6633
+      command: ovs-vsctl set-controller "{{ bridge }}" tcp:"{{ controller }}":6633
