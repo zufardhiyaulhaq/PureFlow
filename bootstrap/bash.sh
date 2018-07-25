@@ -22,7 +22,37 @@ sudo apt-get install -y ansible
 
 echo "Install requirement package"
 echo "============================================"
-sudo apt-get install -y wget curl nano unzip
+sudo apt-get install -y wget curl nano unzip git python-minimal python-pip
+
+echo "Clone Repository"
+echo "============================================"
+git clone https://github.com/zufardhiyaulhaq/PureFlow.git
+sudo mv PureFlow/ /opt/
+
+echo "Creating Daemon for Opendaylight"
+echo "============================================"
+sudo sh -c 'cat << EOF > /etc/systemd/system/dashboard.service
+[Unit]
+Description=Dashboard Service
+
+[Service]
+User=root
+Group=root
+WorkingDirectory=/opt/PureFlow/dashboard/
+ExecStart=/usr/bin/python /opt/PureFlow/dashboard/dashboard.py
+
+[Install]
+WantedBy=multi-user.target
+EOF'
+
+echo "Install python dashboard requirement"
+echo "============================================"
+sudo pip install -r /opt/PureFlow/dashboard/requirement.txt
+
+echo "Running dashboard program"
+echo "============================================"
+export LC_ALL=C
+sudo systemctl start dashboard
 
 echo "Install Java JRE"
 echo "============================================"
@@ -62,3 +92,4 @@ EOF'
 echo "Starting Opendaylight as backgroud"
 echo "============================================"
 sudo systemctl start opendaylight
+

@@ -23,7 +23,8 @@ def openvswitch_api():
     data = request.form.to_dict(flat=True)
     
     if data["device-type"] == "openvswitch":
-        os.system('ansible-playbook /opt/ansible/playbook/openvswich/openvswitch.yaml --extra-vars "host=%s controller=%s bridge=%s"'%(data["device-ip"],data["controller"],data["bridge"]))
+        os.system('ansible-playbook /opt/PureFlow/ansible/playbook/openvswich/openvswitch.yaml --extra-vars "host=%s controller=%s bridge=%s"'%(data["device-ip"],data["controller"],data["bridge"]))
 
-
+if __name__ == '__main__':
+    app.run(host="0.0.0.0", port=4000, debug=True)
 
