@@ -1,6 +1,6 @@
 - hosts: all
   remote_user: "{{ user }}"
-  port: "{{ port }}"
+  port: "{{ port | int }}"
   connection: paramiko
   tasks:
     - name: Provisioning MikroTik
