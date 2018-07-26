@@ -5,4 +5,4 @@ sudo git pull
 
 echo "Restart service"
 echo "============================================"
-sudo sytemctl restart dashboard
+sudo systemctl restart dashboard
