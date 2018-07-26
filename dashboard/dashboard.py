@@ -25,8 +25,8 @@ def openvswitch_api():
     data = request.form.to_dict(flat=True)
     print (data)
     print (type(data))
-    print (data["device-type"])
-    print (type(data["device-type"]))
+    #print (data["device-type"])
+    #print (type(data["device-type"]))
     # if data["device-type"] == "openvswitch":
     #     os.system('ansible-playbook -u %s -i %s, /opt/PureFlow/ansible/playbook/openvswitch/openvswitch.yaml --extra-vars "controller=%s bridge=%s"'%(data["username"],data["device-ip"],data["controller"],data["bridge"]))
     #     return "success!"
