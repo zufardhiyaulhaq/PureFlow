@@ -2,6 +2,7 @@ from flask import Flask, render_template
 from flask import request
 
 import os
+import ast
 import json
 
 app = Flask(__name__)
@@ -22,7 +23,7 @@ def openvswitch():
 def openvswitch_api():
     # data = request.get_json() ##tidak support atau belum support form di dashboard
     
-    data = request.form.to_dict(flat=True)
+    data = ast.literal_eval(request.form.to_dict(flat=True))
     print (data)
     print (type(data))
     print (data["device-type"])
