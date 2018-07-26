@@ -33,7 +33,7 @@ def openvswitch_api():
         return "success!"
     
     if data["device-type"] == "mikrotik":
-        os.system('ansible-playbook -i %s, /opt/PureFlow/ansible/playbook/mikrotik.yaml --extra-vars "user=%s ansible_paramiko_pass=%s port=%s controller=%s bridge=%s"'%(data["device-ip"],data["username"],data["password"],data["port"],data["controller"],data["bridge"]))
+        os.system("ansible all -i %s, -m raw -a '/openflow add name=%s controllers=%s; /openflow enable %s;  quit' -u %s --extra-vars 'ansible_password=%s ansible_port=%s'"%(data["device-ip"],data["bridge"],data["controller"],data["bridge"],data["username"],data["password"],data["port"]))
         return "success!"
 
 if __name__ == '__main__':

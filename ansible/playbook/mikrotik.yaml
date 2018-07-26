@@ -1,7 +1,0 @@
-- hosts: all
-  remote_user: "{{ user }}"
-  port: "{{ (port/10) | int }}"
-  connection: paramiko
-  tasks:
-    - name: Provisioning MikroTik
-      raw: /openflow add name="{{ bridge }}" controllers="{{ controller }}"
