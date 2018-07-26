@@ -19,15 +19,21 @@ def provisioning():
 def openvswitch():
     return render_template('openvswitch.html')
 
+@app.route('/provisioning/mikrotik')
+def mikrotik():
+    return render_template('mikrotik.html')
+
 @app.route('/provisioning/api', methods = ['POST'])
 def openvswitch_api():
-    # data = request.get_json() ##tidak support atau belum support form di dashboard
-    
     raw = request.form.to_dict(flat=True)
     data = {k.encode('utf8'): v.encode('utf8') for k, v in raw.items()}
 
     if data["device-type"] == "openvswitch":
-        os.system('ansible-playbook -u %s -i %s, /opt/PureFlow/ansible/playbook/openvswitch/openvswitch.yaml --extra-vars "controller=%s bridge=%s"'%(data["username"],data["device-ip"],data["controller"],data["bridge"]))
+        os.system('ansible-playbook -u %s -i %s, /opt/PureFlow/ansible/playbook/openvswitch.yaml --extra-vars "controller=%s bridge=%s"'%(data["username"],data["device-ip"],data["controller"],data["bridge"]))
+        return "success!"
+    
+    if data["device-type"] == "mikrotik":
+        os.system('ansible-playbook -i %s, /opt/PureFlow/ansible/playbook/mikrotik.yaml --extra-vars "user=%s pass=%s port=%s controller=%s bridge=%s"'%(data["device-ip"],data["username"],data["password"],data["port"],data["controller"],data["bridge"]))
         return "success!"
 
 if __name__ == '__main__':

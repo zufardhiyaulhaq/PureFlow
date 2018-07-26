@@ -1,0 +1,8 @@
+- hosts: all
+  remote_user: {{ user }}
+  password:   {{ password }}
+  set_fact:
+    ansible_ssh_port: {{ port }}
+  tasks:
+    - name: Provisioning MikroTik
+      raw: /openflow add name={{ bridge }} controllers={{ controller }}
