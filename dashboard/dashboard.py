@@ -23,7 +23,12 @@ def openvswitch():
 def openvswitch_api():
     # data = request.get_json() ##tidak support atau belum support form di dashboard
     
-    data = ast.literal_eval(request.form.to_dict(flat=True))
+    data = request.form.to_dict(flat=True)
+
+    for key, value in data.items():
+        if value == "":
+            data.pop(key)
+            
     print (data)
     print (type(data))
     print (data["device-type"])
