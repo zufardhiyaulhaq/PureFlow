@@ -22,7 +22,7 @@ def openvswitch():
 def openvswitch_api():
     # data = request.get_json() ##tidak support atau belum support form di dashboard
     
-    data = request.form.to.dict(flat=True)
+    data = request.form.to_dict(flat=True)
     print (data)
     print (type(data))
     print (data["device-type"])
@@ -31,7 +31,7 @@ def openvswitch_api():
     #     os.system('ansible-playbook -u %s -i %s, /opt/PureFlow/ansible/playbook/openvswitch/openvswitch.yaml --extra-vars "controller=%s bridge=%s"'%(data["username"],data["device-ip"],data["controller"],data["bridge"]))
     #     return "success!"
     return "success!"
- 
+
 if __name__ == '__main__':
     app.run(host="0.0.0.0", port=4000, debug=True)
 
