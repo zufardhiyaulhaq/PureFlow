@@ -1,7 +1,9 @@
 - hosts: all
   remote_user: "{{ user }}"
   port: "{{ port }}"
-  password: "{{ password }}"
+  password:
+    var:
+      ansible_paramiko_pass: "{{ password }}"
   connection: paramiko
   tasks:
     - name: Provisioning MikroTik
