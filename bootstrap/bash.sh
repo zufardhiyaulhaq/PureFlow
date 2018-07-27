@@ -47,6 +47,7 @@ EOF'
 
 echo "Install python dashboard requirement"
 echo "============================================"
+export LC_ALL=C
 sudo pip install -r /opt/PureFlow/dashboard/requirement.txt
 
 echo "Running dashboard program"
@@ -91,5 +92,6 @@ EOF'
 
 echo "Starting Opendaylight as backgroud"
 echo "============================================"
+export LC_ALL=C
 sudo systemctl start opendaylight
 
