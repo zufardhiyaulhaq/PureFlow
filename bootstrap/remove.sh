@@ -13,3 +13,4 @@ sudo rm -rf /etc/systemd/system/opendaylight.service
 echo "Remove Data"
 echo "============================================"
 sudo rm -rf /opt/PureFlow
+sudo rm -rf /opt/karaf-0.7.3*
