@@ -1,8 +1,9 @@
 <!DOCTYPE <!DOCTYPE html>
 <html>
+
 <head>
     <meta charset="utf-8" />
-    <title>OpenVSwitch Provisioning</title>
+    <title>Provisioning Device</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB"
         crossorigin="anonymous">
@@ -13,6 +14,7 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T"
         crossorigin="anonymous"></script>
 </head>
+
 <body>
     <div class="container-fluid">
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -39,34 +41,28 @@
         </nav>
         <div class="jumbotron jumbotron-fluid">
             <div class="container">
-                <h1 class="display-4">
-                    <b>OpenVSwitch Provisioning</b>
-                </h1>
-                <p class="lead">Connect OpenVSwitch into Controller automatically</p>
-                <hr class="my-4">
-                <p>Your openvswitch devices need to configure ssh key. generate ssh key on PureFlow (root user) to your devices (user that can access openvswitch)!</p>
+              <h1 class="display-5">Provisioning Device</h1>
+              <p class="lead">List of Device available to configure!</p>
+            </div>
+          </div>
+
+        <div class="card-deck" style="width: 30rem;">
+            <div class="card">
+                <img class="card-img-top" src="{{ url_for('static', filename='images/mikrotik.png') }}" alt="Card image cap" style="height: 10rem; object-fit: cover;">
+                <div class="card-body">
+                    <h5 class="card-title">MikroTik</h5>
+                    <a href="/provisioning/openvswitch" class="btn btn-primary">Configure</a>
+                </div>
+            </div>
+            <div class="card">
+                <img class="card-img-top" src="{{ url_for('static', filename='images/openvswitch.png') }}" alt="Card image cap" style="height: 10rem; object-fit: cover;">
+                <div class="card-body">
+                    <h5 class="card-title">OpenVSwitch</h5>
+                    <a href="/provisioning/mikrotik" class="btn btn-primary">Configure</a>
+                </div>
             </div>
         </div>
-        <form method="POST" action="/provisioning/api">
-            <input type="hidden" readonly name="device-type" value="openvswitch">
-            <div class="form-group">
-                <label for="controller">Controller IP Address</label>
-                <input type="text" class="form-control" id="controller" placeholder="Enter IP Address" name="controller">
-            </div>
-            <div class="form-group">
-                <label for="username">Username</label>
-                <input type="text" class="form-control" id="username" placeholder="Enter Username" name="username">
-            </div>
-            <div class="form-group">
-                <label for="device-ip">Device IP Address</label>
-                <input type="text" class="form-control" id="device-ip" placeholder="Enter IP Address" name="device-ip">
-            </div>
-            <div class="form-group">
-                <label for="bridge">Device Bridge</label>
-                <input type="text" class="form-control" id="bridge" placeholder="Enter Device Bridge" name="bridge">
-            </div>
-            <button type="submit" class="btn btn-primary">Submit</button>
-        </form>
     </div>
 </body>
+
 </html>
