@@ -18,7 +18,11 @@ sudo apt-get -y update
 
 echo "Install Ansible"
 echo "============================================"
-sudo apt-get install -y ansible
+sudo apt-get install -y ansible crudini
+
+echo "Configure ansible"
+echo "============================================"
+sudo crudini --set /etc/ansible/ansible.cfg defaults host_key_checking false
 
 echo "Install requirement package"
 echo "============================================"
