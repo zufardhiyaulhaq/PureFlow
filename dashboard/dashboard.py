@@ -29,10 +29,12 @@ def openvswitch_api():
     data = {k.encode('utf8'): v.encode('utf8') for k, v in raw.items()}
 
     if data["device-type"] == "openvswitch":
+        os.system("export ANSIBLE_HOST_KEY_CHECKING=False")
         os.system('ansible-playbook -u %s -i %s, /opt/PureFlow/ansible/playbook/openvswitch.yaml --extra-vars "controller=%s bridge=%s"'%(data["username"],data["device-ip"],data["controller"],data["bridge"]))
         return "success!"
     
     if data["device-type"] == "mikrotik":
+        os.system("export ANSIBLE_HOST_KEY_CHECKING=False")
         os.system("ansible all -i %s, -m raw -a '/openflow add name=%s controllers=%s; /openflow enable %s;  quit' -u %s --extra-vars 'ansible_password=%s ansible_port=%s'"%(data["device-ip"],data["bridge"],data["controller"],data["bridge"],data["username"],data["password"],data["port"]))
         return "success!"
 

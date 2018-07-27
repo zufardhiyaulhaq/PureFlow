@@ -95,3 +95,6 @@ echo "============================================"
 export LC_ALL=C
 sudo systemctl start opendaylight
 
+sleep 60
+
+sudo systemctl restart opendaylight
