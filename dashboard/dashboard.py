@@ -22,6 +22,18 @@ def admin_login():
         flash('wrong password!')
     return redirect("/")
 
+@app.route('/configuring')
+def configuring():
+    if not session.get('logged_in'):
+        return render_template('login.html')
+    else:
+        return render_template('configuring.html')
+
+@app.route('/configuring/api', methods = ['POST'])
+def configuring_api():
+    raw = request.form.to_dict(flat=True)
+    data = {k.encode('utf8'): v.encode('utf8') for k, v in raw.items()}
+
 @app.route('/provisioning')
 def provisioning():
     if not session.get('logged_in'):
