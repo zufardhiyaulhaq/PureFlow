@@ -20,7 +20,7 @@ def admin_login():
         session['logged_in'] = True
     else:
         flash('wrong password!')
-    return index()
+    return redirect("/")
 
 @app.route('/provisioning')
 def provisioning():
