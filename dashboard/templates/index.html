@@ -18,7 +18,7 @@
 <body>
     <div class="container-fluid">
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <a class="navbar-brand" href="#">
+            <a class="navbar-brand" href="/">
                 <b>
                     PureFlow
                 </b>
@@ -27,22 +27,30 @@
                 aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav mr-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="/">Dashboard</a>
-                    </li>
-                    <li class="nav-item active">
-                        <a class="nav-link" href="/provisioning">Provisioning</a>
-                    </li>
-                </ul>
-            </div>
         </nav>
         <div class="jumbotron jumbotron-fluid">
             <div class="container">
-              <h1 class="display-5">Provisioning Device</h1>
-              <p class="lead">List of Device available to configure!</p>
+                <p class="lead">Provisioning openflow device and Modifying flow table</p>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">Provisioning</h5>
+                                <p class="card-text">Provisiong openflow devices, connect into controller.</p>
+                                <a href="/provisioning" class="btn btn-primary">Execute</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">Modifying</h5>
+                                <p class="card-text">Modifying openflow devices.</p>
+                                <a href="/configuring" class="btn btn-primary">Execute</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
