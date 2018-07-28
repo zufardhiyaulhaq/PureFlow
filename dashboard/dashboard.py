@@ -14,6 +14,11 @@ def index():
     else:
         return render_template('index.html')
 
+@app.route('/logout')
+def logout():
+    session['logged_in'] = False
+    return redirect("/")
+
 @app.route('/login', methods=['POST'])
 def admin_login():
     if request.form['password'] == 'admin' and request.form['username'] == 'admin':
