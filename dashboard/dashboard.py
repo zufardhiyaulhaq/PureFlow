@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, session, redirect, flash
 from flask import request
 
 import os
@@ -9,19 +9,39 @@ app = Flask(__name__)
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    if not session.get('logged_in'):
+        return render_template('login.html')
+    else:
+        return render_template('index.html')
+
+@app.route('/login', methods=['POST'])
+def admin_login():
+    if request.form['password'] == 'admin' and request.form['username'] == 'admin':
+        session['logged_in'] = True
+    else:
+        flash('wrong password!')
+    return index()
 
 @app.route('/provisioning')
 def provisioning():
-    return render_template('provisioning.html')
+    if not session.get('logged_in'):
+        return render_template('login.html')
+    else:
+        return render_template('provisioning.html')
 
 @app.route('/provisioning/openvswitch')
 def openvswitch():
-    return render_template('openvswitch.html')
+    if not session.get('logged_in'):
+        return render_template('login.html')
+    else:
+        return render_template('openvswitch.html')
 
 @app.route('/provisioning/mikrotik')
 def mikrotik():
-    return render_template('mikrotik.html')
+    if not session.get('logged_in'):
+        return render_template('login.html')
+    else:
+        return render_template('mikrotik.html')
 
 @app.route('/provisioning/api', methods = ['POST'])
 def openvswitch_api():
@@ -39,5 +59,6 @@ def openvswitch_api():
         return "success!"
 
 if __name__ == '__main__':
+    app.secret_key = os.urandom(12)
     app.run(host="0.0.0.0", port=4000, debug=True)
 
