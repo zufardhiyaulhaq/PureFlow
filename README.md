@@ -8,7 +8,7 @@ PureFlow is platform that can provisioning device to connect to openflow control
 - MikroTik
 
 ### **Architecture**
-PureFlow using Ansible and OpenDayLight as main Backend tools. Ansible is use to provisioning the devices via SSH and OpenDayLight to control the flow inside devices.
+PureFlow using Ansible and ONOS as main Backend tools. Ansible is use to provisioning the devices via SSH and ONOS to control the flow inside devices.
 
 <span style="display:block;text-align:center">![architecture](https://raw.githubusercontent.com/zufardhiyaulhaq/PureFlow/master/assets/architecture.png)</span>
 

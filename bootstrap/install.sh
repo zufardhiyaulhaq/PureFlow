@@ -33,7 +33,7 @@ echo "============================================"
 git clone https://github.com/zufardhiyaulhaq/PureFlow.git
 sudo mv PureFlow/ /opt/
 
-echo "Creating Daemon for Opendaylight"
+echo "Creating Daemon for Dashboard"
 echo "============================================"
 sudo sh -c 'cat << EOF > /etc/systemd/system/dashboard.service
 [Unit]
@@ -57,48 +57,40 @@ sudo pip install -r /opt/PureFlow/dashboard/requirement.txt
 echo "Running dashboard program"
 echo "============================================"
 export LC_ALL=C
+sudo systemctl enable dashboard
 sudo systemctl start dashboard
 
 echo "Install Java JRE"
 echo "============================================"
 sudo apt-get install -y default-jre
 
-echo "Download Opendaylight"
+echo "Download ONOS"
 echo "============================================"
-wget https://nexus.opendaylight.org/content/repositories/public/org/opendaylight/integration/karaf/0.7.3/karaf-0.7.3.zip
+wget http://repo1.maven.org/maven2/org/onosproject/onos-releases/1.13.2/onos-1.13.2.zip
 
-echo "Unzip Opendaylight"
+echo "Unzip ONOS"
 echo "============================================"
-sudo mv karaf-0.7.3.zip /opt/
+sudo mv onos-1.13.2.zip /opt/
 cd /opt/
-sudo unzip karaf-0.7.3.zip
+sudo unzip onos-1.13.2.zip
 
-echo "Configuring Opendaylight"
+echo "Configuring ONOS"
 echo "============================================"
-cd karaf-0.7.3
-sudo sh -c "echo 'feature:install odl-dlux-core odl-dluxapps-nodes odl-dluxapps-topology odl-dluxapps-applications odl-l2switch-all' >> etc/shell.init.script"
+sudo mv onos-1.13.2 onos
+cd onos
+sudo sed -i '/ONOS_APPS=${ONOS_APPS:-}/c\ONOS_APPS=openflow' bin/onos-service
 
-echo "Creating Daemon for Opendaylight"
+echo "Creating Daemon for ONOS"
 echo "============================================"
-sudo sh -c 'cat << EOF > /etc/systemd/system/opendaylight.service
-[Unit]
-Description=Opendaylight Service
+sudo cp /opt/onos/init/onos.initd /etc/init.d/onos
+sudo cp /opt/onos/init/onos.service /etc/systemd/system/
 
-[Service]
-User=root
-Group=root
-WorkingDirectory=/opt/karaf-0.7.3/
-ExecStart=/opt/karaf-0.7.3/bin/karaf
-
-[Install]
-WantedBy=multi-user.target
-EOF'
-
-echo "Starting Opendaylight as backgroud"
+echo "Starting ONOS as backgroud"
 echo "============================================"
 export LC_ALL=C
-sudo systemctl start opendaylight
+sudo systemctl daemon-reload
+sudo systemctl enable onos.service
 
 sleep 60
 
-sudo systemctl restart opendaylight
+sudo systemctl start onos.service
