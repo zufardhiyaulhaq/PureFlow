@@ -91,6 +91,6 @@ export LC_ALL=C
 sudo systemctl daemon-reload
 sudo systemctl enable onos.service
 
-sleep 60
+sleep 10
 
 sudo systemctl start onos.service

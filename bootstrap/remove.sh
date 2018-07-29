@@ -15,5 +15,5 @@ sudo rm -rf /etc/systemd/system/onos.service
 echo "Remove Data"
 echo "============================================"
 sudo rm -rf /opt/PureFlow
-sudo rm -rf /opt/onos-1.13.2
+sudo rm -rf /opt/onos
 sudo rm -rf /opt/onos-1.13.2.zip
