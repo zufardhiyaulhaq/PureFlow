@@ -1,5 +1,6 @@
 <!DOCTYPE <!DOCTYPE html>
 <html>
+
 <head>
     <meta charset="utf-8" />
     <title>MikroTik Provisioning</title>
@@ -10,9 +11,9 @@
         crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
         crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T"
-        crossorigin="anonymous"></script>
+    <script src="/static/bootstrap.js"></script>
 </head>
+
 <body>
     <div class="container-fluid">
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -21,7 +22,7 @@
                     PureFlow
                 </b>
             </a>
-            <a href="/logout" style="position: absolute; right: 0;" class="btn btn-primary" role="button" >Logout</a>
+            <a href="/logout" style="position: absolute; right: 0;" class="btn btn-primary" role="button">Logout</a>
 
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto">
@@ -34,6 +35,7 @@
                 </ul>
             </div>
         </nav>
+
         <div class="jumbotron jumbotron-fluid">
             <div class="container">
                 <h1 class="display-4">
@@ -44,34 +46,85 @@
                 <p>Your MikroTik devices need first add openflow packages to works!</p>
             </div>
         </div>
-        <form method="POST" action="/provisioning/api">
-            <input type="hidden" readonly name="device-type" value="mikrotik">
-            <div class="form-group">
-                <label for="controller">Controller IP Address</label>
-                <input type="text" class="form-control" id="controller" placeholder="Enter IP Address" name="controller">
+
+        <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+            <li class="nav-item">
+                <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab" aria-controls="pills-home"
+                    aria-selected="true">Device Provisioning</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#pills-profile" role="tab" aria-controls="pills-profile"
+                    aria-selected="false">Port Provisioning</a>
+            </li>
+        </ul>
+
+        <div class="tab-content" id="pills-tabContent">
+
+            <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+                <form method="POST" action="/provisioning/api">
+                    <input type="hidden" readonly name="device-type" value="mikrotik">
+                    <div class="form-group">
+                        <label for="controller">Controller IP Address</label>
+                        <input type="text" class="form-control" id="controller" placeholder="Enter IP Address" name="controller">
+                    </div>
+                    <div class="form-group">
+                        <label for="bridge">OpenFlow name</label>
+                        <input type="text" class="form-control" id="bridge" placeholder="Enter Device Bridge" name="bridge">
+                    </div>
+                    <div class="form-group">
+                        <label for="username">SSH Username</label>
+                        <input type="text" class="form-control" id="username" placeholder="Enter Username" name="username">
+                    </div>
+                    <div class="form-group">
+                        <label for="password">SSH Password</label>
+                        <input type="text" class="form-control" id="password" placeholder="Enter Password" name="password">
+                    </div>
+                    <div class="form-group">
+                        <label for="port">SSH Port</label>
+                        <input type="text" class="form-control" id="port" placeholder="Enter Port" name="port">
+                    </div>
+                    <div class="form-group">
+                        <label for="device-ip">Device IP Address</label>
+                        <input type="text" class="form-control" id="device-ip" placeholder="Enter IP Address" name="device-ip">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
             </div>
-            <div class="form-group">
-                <label for="bridge">OpenFlow name</label>
-                <input type="text" class="form-control" id="bridge" placeholder="Enter Device Bridge" name="bridge">
+
+            <div class="tab-pane" id="pills-profile" role="tabpanel" aria-labelledby="profile-tab">
+                <form method="POST" action="/provisioning/api">
+                    <input type="hidden" readonly name="device-type" value="mikrotik-port">
+                    <div class="form-group">
+                        <label for="bridge">OpenFlow name</label>
+                        <input type="text" class="form-control" id="bridge" placeholder="Enter Device Bridge" name="bridge">
+                        <small id="openflowhelp" class="form-text text-muted">Enter OpenFlow name same when provisioning devices.</small>
+                    </div>
+                    <div class="form-group">
+                        <label for="username">SSH Username</label>
+                        <input type="text" class="form-control" id="username" placeholder="Enter Username" name="username">
+                    </div>
+                    <div class="form-group">
+                        <label for="password">SSH Password</label>
+                        <input type="text" class="form-control" id="password" placeholder="Enter Password" name="password">
+                    </div>
+                    <div class="form-group">
+                        <label for="port">SSH Port</label>
+                        <input type="text" class="form-control" id="port" placeholder="Enter Port" name="port">
+                    </div>
+                    <div class="form-group">
+                            <label for="device-ip">Device IP Address</label>
+                            <input type="text" class="form-control" id="device-ip" placeholder="Enter IP Address" name="device-ip">
+                    </div>
+                    <div class="form-group">
+                        <label for="interface">Interface Port</label>
+                        <input type="text" class="form-control" id="interface" placeholder="Enter Interface Name" name="inteface">
+                        <small id="openflowhelp" class="form-text text-muted">Enter interface name, e.g ether1.</small>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
             </div>
-            <div class="form-group">
-                <label for="username">SSH Username</label>
-                <input type="text" class="form-control" id="username" placeholder="Enter Username" name="username">
-            </div>
-            <div class="form-group">
-                <label for="password">SSH Password</label>
-                <input type="text" class="form-control" id="password" placeholder="Enter Password" name="password">
-            </div>
-            <div class="form-group">
-                <label for="port">SSH Port</label>
-                <input type="text" class="form-control" id="port" placeholder="Enter Port" name="port">
-            </div>
-            <div class="form-group">
-                <label for="device-ip">Device IP Address</label>
-                <input type="text" class="form-control" id="device-ip" placeholder="Enter IP Address" name="device-ip">
-            </div>
-            <button type="submit" class="btn btn-primary">Submit</button>
-        </form>
+        </div>
     </div>
 </body>
+
 </html>

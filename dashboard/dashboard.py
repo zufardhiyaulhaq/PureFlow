@@ -73,6 +73,11 @@ def openvswitch_api():
     if data["device-type"] == "mikrotik":
         os.system("export ANSIBLE_HOST_KEY_CHECKING=False")
         os.system("ansible all -i %s, -m raw -a '/openflow add name=%s controllers=%s; /openflow enable %s;  quit' -u %s --extra-vars 'ansible_password=%s ansible_port=%s'"%(data["device-ip"],data["bridge"],data["controller"],data["bridge"],data["username"],data["password"],data["port"]))
+        return "success!" 
+    
+    if data["device-type"] == "mikrotik-port":
+        os.system("export ANSIBLE_HOST_KEY_CHECKING=False")
+        os.system("ansible all -i %s, -m raw -a '/openflow add port switch=%s interface=%s;  quit' -u %s --extra-vars 'ansible_password=%s ansible_port=%s'"%(data["device-ip"],data["bridge"],data["interface"],data["username"],data["password"],data["port"]))
         return "success!"
 
 if __name__ == '__main__':
