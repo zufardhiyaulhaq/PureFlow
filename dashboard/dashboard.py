@@ -40,7 +40,7 @@ def configuring():
         return render_template('login.html')
     else:
         data = get("/devices")
-        return render_template('configuring.html')
+        return render_template('configuring.html', data=data)
 
 @app.route('/configuring/api', methods = ['POST'])
 def configuring_api():
