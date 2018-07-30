@@ -4,8 +4,15 @@ from flask import request
 import os
 import ast
 import json
+import requests
+from requests.auth import HTTPBasicAuth
 
 app = Flask(__name__)
+
+def get(append):
+    url = 'http://127.0.0.1:8181/onos/v1'+append
+    data = requests.get(url, auth=HTTPBasicAuth('onos','rocks')).text.decode('utf-8')
+    return json.loads(data)
 
 @app.route('/')
 def index():
@@ -32,6 +39,7 @@ def configuring():
     if not session.get('logged_in'):
         return render_template('login.html')
     else:
+        data = get("/devices")
         return render_template('configuring.html')
 
 @app.route('/configuring/api', methods = ['POST'])
