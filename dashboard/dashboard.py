@@ -42,7 +42,7 @@ def configuring():
         data = get("/devices")
         return render_template('configuring.html', data=data)
 
-@app.route('/configuring/<id>', methods = ['POST'])
+@app.route('/configuring/<id>', methods = ['POST','GET'])
 def device(id):
     if not session.get('logged_in'):
         return render_template('login.html')
