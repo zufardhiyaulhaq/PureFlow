@@ -30,16 +30,19 @@
                     <li class="nav-item">
                         <a class="nav-link" href="/">Dashboard</a>
                     </li>
-                    <li class="nav-item active">
+                    <li class="nav-item">
                         <a class="nav-link" href="/provisioning">Provisioning</a>
+                    </li>
+                    <li class="nav-item active">
+                            <a class="nav-link" href="/configuring">Dashboard</a>
                     </li>
                 </ul>
             </div>
         </nav>
         <div class="jumbotron jumbotron-fluid">
             <div class="container">
-              <h1 class="display-5">Configuring Devices</h1>
-              <p class="lead">List of Device available to configure!</p>
+              <h1 class="display-5">Configuring Flow Devices</h1>
+              <p class="lead">Choose the devices to configure!</p>
             </div>
           </div>
         
@@ -52,6 +55,7 @@
                     <p class="card-text">{{ device["mfr"] }}</p>
                     <p class="card-text">{{ device["sw"] }}</p>
                 </div>
+                <a href="/provisioning/{{ device["id"] }}" class="btn btn-primary">Configure</a>
             </div>
             {% endfor %}
         </div>
