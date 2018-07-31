@@ -42,12 +42,14 @@ def configuring():
         data = get("/devices")
         return render_template('configuring.html', data=data)
 
-@app.route('/configuring/<id>', methods = ['POST','GET'])
+@app.route('/configuring/api', methods = ['POST','GET'])
 def device(id):
     if not session.get('logged_in'):
         return render_template('login.html')
     else:
-        return render_template('configuring-device.html',id=id)
+        raw = request.form.to_dict(flat=True)
+        data = {k.encode('utf8'): v.encode('utf8') for k, v in raw.items()}
+        return render_template('configuring-device.html',data=data)
 
 @app.route('/configuring/api', methods = ['POST'])
 def configuring_api():

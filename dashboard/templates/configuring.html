@@ -56,7 +56,11 @@
                     <p class="card-text">{{ device["sw"] }}</p>
                     <p class="card-text">{{ device["annotations"]["protocol"] }}</p>
                 </div>
-                <a href="/configuring/{{ device["id"] }}" class="btn btn-primary">Configure</a>
+                <form method="POST" action="/configuring/api">
+                    <input type="hidden" readonly name="openflow" value={{ device["annotations"]["protocol"] }}>
+                    <input type="hidden" readonly name="deviceid" value={{ device["id"] }}>
+                    <button type="submit" class="btn btn-primary">Configure</button>
+                </form>
             </div>
             {% endfor %}
         </div>
