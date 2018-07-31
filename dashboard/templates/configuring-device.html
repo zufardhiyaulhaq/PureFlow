@@ -65,10 +65,13 @@
                 <input type="text" class="form-control" id="eth_dst" placeholder="Destination MAC Address" name="eth_dst">
                 <small class="form-text text-muted">empty if not in use</small>
             </div>
-
-
-
-            
+            <select class="custom-select">
+                <option selected>Ethernet Type</option>
+                <option name="eth_type" value="0x0800">0x0800</option>
+                <option name="eth_type" value="0x86DD">0x86DD</option>
+            </select>
+            <small class="form-text text-muted">Use this for layer 3 modification</small>
+            <small class="form-text text-muted">https://en.wikipedia.org/wiki/EtherType</small>
             <div class="form-group">
                 <label for="ipv4_src">Source IPv4 Address</label>
                 <input type="text" class="form-control" id="ipv4_src" placeholder="Source IPv4 Address" name="ipv4_src">
@@ -79,10 +82,13 @@
                 <input type="text" class="form-control" id="ipv4_dst" placeholder="Destination IPv4 Address" name="ipv4_dst">
                 <small class="form-text text-muted">empty if not in use</small>
             </div>
-
-
-
-
+            <select class="custom-select">
+                <option selected>IP Protocol</option>
+                <option name="ip_proto" value="0x0800">0x0800</option>
+                <option name="ip_proto" value="0x86DD">0x86DD</option>
+            </select>
+            <small class="form-text text-muted">Use this for layer 4 modification</small>
+            <small class="form-text text-muted">https://en.wikipedia.org/wiki/List_of_IP_protocol_numbers</small>
             <div class="form-group">
                 <label for="udp_src">Source UDP</label>
                 <input type="text" class="form-control" id="udp_src" placeholder="Source UDP" name="udp_src">
