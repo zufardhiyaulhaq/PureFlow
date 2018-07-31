@@ -57,6 +57,8 @@ def configuring_api():
     data = {k.encode('utf8'): v.encode('utf8') for k, v in raw.items()}
     print (type(data))
     print (data)
+
+    
     return ("success!")
 
 @app.route('/provisioning')
