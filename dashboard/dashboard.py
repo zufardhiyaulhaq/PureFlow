@@ -51,10 +51,11 @@ def device():
         data = {k.encode('utf8'): v.encode('utf8') for k, v in raw.items()}
         return render_template('configuring-device.html',data=data)
 
-@app.route('/configuring/api', methods = ['POST'])
+@app.route('/configuring/controller', methods = ['POST'])
 def configuring_api():
     raw = request.form.to_dict(flat=True)
     data = {k.encode('utf8'): v.encode('utf8') for k, v in raw.items()}
+    print (data)
 
 @app.route('/provisioning')
 def provisioning():
