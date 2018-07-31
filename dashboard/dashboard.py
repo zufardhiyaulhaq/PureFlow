@@ -55,6 +55,7 @@ def device():
 def configuring_api():
     raw = request.form.to_dict(flat=True)
     data = {k.encode('utf8'): v.encode('utf8') for k, v in raw.items()}
+    print (type(data))
     print (data)
     return ("success!")
 
