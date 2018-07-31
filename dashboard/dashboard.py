@@ -43,7 +43,7 @@ def configuring():
         return render_template('configuring.html', data=data)
 
 @app.route('/configuring/api', methods = ['POST','GET'])
-def device(id):
+def device():
     if not session.get('logged_in'):
         return render_template('login.html')
     else:
