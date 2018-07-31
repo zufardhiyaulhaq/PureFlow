@@ -54,6 +54,7 @@
                     <h5 class="card-title">{{ device["annotations"]["managementAddress"] }}</h5>
                     <p class="card-text">{{ device["mfr"] }}</p>
                     <p class="card-text">{{ device["sw"] }}</p>
+                    <p class="card-text">{{ device["annotations"]["protocol"] }}</p>
                 </div>
                 <a href="/configuring/{{ device["id"] }}" class="btn btn-primary">Configure</a>
             </div>
