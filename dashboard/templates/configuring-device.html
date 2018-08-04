@@ -60,22 +60,24 @@
                         <input type="text" class="form-control" id="in_port" placeholder="In Port Value" name="in_port">
                         <small class="form-text text-muted">empty if not in use</small>
                     </div>
+
                     <div class="form-group">
                         <label for="eth_src">Source MAC Address</label>
                         <input type="text" class="form-control" id="eth_src" placeholder="Source MAC Address" name="eth_src">
                         <small class="form-text text-muted">empty if not in use</small>
                     </div>
+
                     <div class="form-group">
                         <label for="eth_dst">Destination MAC Address</label>
                         <input type="text" class="form-control" id="eth_dst" placeholder="Destination MAC Address" name="eth_dst">
                         <small class="form-text text-muted">empty if not in use</small>
                     </div>
+
                     <div class="form-group">
                         <label for="eth_type">Ethernet Type</label>
                         <select class="custom-select" name="eth_type" id="ip">
                             <option value="">None</option>
                             <option value="0x0800">IPv4</option>
-                            <option value="0x86DD">IPv6</option>
                         </select>
                         <small class="form-text text-muted">Use this for layer 3 modification</small>
                         <small class="form-text text-muted">https://en.wikipedia.org/wiki/EtherType</small>
@@ -94,68 +96,53 @@
                                 <small class="form-text text-muted">empty if not in use</small>
                             </div>
                             <small class="form-text text-muted">Use IPv4 if you choose IPv4 in IP Protocol</small>
+
+
+                            <br/>
+                            <div class="form-group">
+                                <label for="ip_proto">IP Protocol</label>
+                                <select class="custom-select" name="ip_proto" id="protocol">
+                                    <option value="">None</option>
+                                    <option value="6">TCP</option>
+                                    <option value="17">UDP</option>
+                                </select>
+                                <small class="form-text text-muted">Use this for layer 4 modification</small>
+                                <small class="form-text text-muted">https://en.wikipedia.org/wiki/List_of_IP_protocol_numbers</small>
+                            </div>
+
+                            <div class="card protocol" id="tcp">
+                                <div class="card-body">
+                                    <div class="form-group">
+                                        <label for="tcp_src">Source TCP</label>
+                                        <input type="text" class="form-control" id="tcp_src" placeholder="Source TCP" name="tcp_src">
+                                        <small class="form-text text-muted">empty if not in use</small>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="tcp_dst">Destination TCP</label>
+                                        <input type="text" class="form-control" id="tcp_dst" placeholder="Destination TCP" name="tcp_dst">
+                                        <small class="form-text text-muted">empty if not in use</small>
+                                    </div>
+                                    <small class="form-text text-muted">Use UDP if you choose UDP in IP Protocol</small>
+                                </div>
+                            </div>
+
+                            <div class="card protocol" id="udp">
+                                <div class="card-body">
+                                    <div class="form-group">
+                                        <label for="udp_src">Source UDP</label>
+                                        <input type="text" class="form-control" id="udp_src" placeholder="Source UDP" name="udp_src">
+                                        <small class="form-text text-muted">empty if not in use</small>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="udp_dst">Destination UDP</label>
+                                        <input type="text" class="form-control" id="udp_dst" placeholder="Destination UDP" name="udp_dst">
+                                        <small class="form-text text-muted">empty if not in use</small>
+                                    </div>
+                                    <small class="form-text text-muted">Use TCP if you choose TCP in IP Protocol</small>
+                                </div>
+                            </div>
                         </div>
                     </div>
-
-                    <div class="card ip" id="ipv6">
-                        <div class="card-body">
-                            <div class="form-group">
-                                <label for="ipv6_src">Source IPv6 Address</label>
-                                <input type="text" class="form-control" id="ipv6_src" placeholder="Source ipv6 Address" name="ipv6_src">
-                                <small class="form-text text-muted">empty if not in use</small>
-                            </div>
-                            <div class="form-group">
-                                <label for="ipv6_dst">Destination IPv6 Address</label>
-                                <input type="text" class="form-control" id="ipv6_dst" placeholder="Destination ipv6 Address" name="ipv6_dst">
-                                <small class="form-text text-muted">empty if not in use</small>
-                            </div>
-                            <small class="form-text text-muted">Use IPv6 if you choose IPv6 in IP Protocol</small>
-                        </div>
-                    </div>
-                    <br/>
-                    <div class="form-group">
-                        <label for="ip_proto">IP Protocol</label>
-                        <select class="custom-select" name="ip_proto">
-                            <option value="">None</option>
-                            <option value="6">TCP</option>
-                            <option value="17">UDP</option>
-                        </select>
-                        <small class="form-text text-muted">Use this for layer 4 modification</small>
-                        <small class="form-text text-muted">https://en.wikipedia.org/wiki/List_of_IP_protocol_numbers</small>
-                    </div>
-
-                    <div class="card protocol">
-                        <div class="card-body">
-                            <div class="form-group">
-                                <label for="tcp_src">Source TCP</label>
-                                <input type="text" class="form-control" id="tcp_src" placeholder="Source TCP" name="tcp_src">
-                                <small class="form-text text-muted">empty if not in use</small>
-                            </div>
-                            <div class="form-group">
-                                <label for="tcp_dst">Destination TCP</label>
-                                <input type="text" class="form-control" id="tcp_dst" placeholder="Destination TCP" name="tcp_dst">
-                                <small class="form-text text-muted">empty if not in use</small>
-                            </div>
-                            <small class="form-text text-muted">Use UDP if you choose UDP in IP Protocol</small>
-                        </div>
-                    </div>
-
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="form-group">
-                                <label for="udp_src">Source UDP</label>
-                                <input type="text" class="form-control" id="udp_src" placeholder="Source UDP" name="udp_src">
-                                <small class="form-text text-muted">empty if not in use</small>
-                            </div>
-                            <div class="form-group">
-                                <label for="udp_dst">Destination UDP</label>
-                                <input type="text" class="form-control" id="udp_dst" placeholder="Destination UDP" name="udp_dst">
-                                <small class="form-text text-muted">empty if not in use</small>
-                            </div>
-                            <small class="form-text text-muted">Use TCP if you choose TCP in IP Protocol</small>
-                        </div>
-                    </div>
-
                 </div>
             </div>
 
@@ -185,6 +172,57 @@
         {% elif data["openflow"] == 'OF_13' %} {% endif %}
     </div>
 
+    {% if data["openflow"] == 'OF_10' %}
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $(".ip").hide()
+
+            $("#ip").change(function () {
+                $(".ip").hide();
+
+                switch ($("#ip option:selected").val()) {
+                    case "0x0800":
+                        {
+                            $("#ipv4").show();
+                            break;
+                        }
+                    case "":
+                        {
+                            $(".ip").hide();
+                            break;
+                        }
+                }
+            })
+
+            $(".protocol").hide()
+
+            $("#protocol").change(function () {
+                $(".protocol").hide();
+
+                switch ($("#protocol option:selected").val()) {
+                    case "6":
+                        {
+                            $("#tcp").show();
+                            break;
+                        }
+                    case "17":
+                        {
+                            $("#udp").hide();
+                            break;
+                        }
+                    case "":
+                        {
+                            $(".ip").hide();
+                            break;
+                        }
+                }
+            })
+        });
+    </script>
+
+    {% elif data["openflow"] == 'OF_13' %}
+
     <script type="text/javascript">
         $(document).ready(function () {
             // default state, show aa only
@@ -209,6 +247,7 @@
         });
     </script>
 
+    {% endif %}
 </body>
 
 </html>
