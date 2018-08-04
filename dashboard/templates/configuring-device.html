@@ -72,7 +72,7 @@
                     </div>
                     <div class="form-group">
                         <label for="eth_type">Ethernet Type</label>
-                        <select class="custom-select" name="eth_type">
+                        <select class="custom-select" name="eth_type" id="ip">
                             <option value="">None</option>
                             <option value="0x0800">IPv4</option>
                             <option value="0x86DD">IPv6</option>
@@ -81,7 +81,7 @@
                         <small class="form-text text-muted">https://en.wikipedia.org/wiki/EtherType</small>
                     </div>
 
-                    <div class="card">
+                    <div class="card ip" id="ipv4">
                         <div class="card-body">
                             <div class="form-group">
                                 <label for="ipv4_src">Source IPv4 Address</label>
@@ -97,7 +97,7 @@
                         </div>
                     </div>
 
-                    <div class="card">
+                    <div class="card ip" id="ipv6">
                         <div class="card-body">
                             <div class="form-group">
                                 <label for="ipv6_src">Source IPv6 Address</label>
@@ -112,7 +112,7 @@
                             <small class="form-text text-muted">Use IPv6 if you choose IPv6 in IP Protocol</small>
                         </div>
                     </div>
-
+                    <br/>
                     <div class="form-group">
                         <label for="ip_proto">IP Protocol</label>
                         <select class="custom-select" name="ip_proto">
@@ -124,7 +124,7 @@
                         <small class="form-text text-muted">https://en.wikipedia.org/wiki/List_of_IP_protocol_numbers</small>
                     </div>
 
-                    <div class="card">
+                    <div class="card protocol">
                         <div class="card-body">
                             <div class="form-group">
                                 <label for="tcp_src">Source TCP</label>
@@ -163,7 +163,19 @@
                 <div class="card-body">
                     <h4 class="card-title">Action</h4>
 
-                    
+                    <div class="card">
+                        <div class="card-body">
+
+                            <div class="form-group">
+                                <label for="ipv4_src">OUTPUT</label>
+                                <input type="hidden" readonly name="action.output" value="OUTPUT">
+                                <input type="text" class="form-control" id="ipv4_src" placeholder="Source IPv4 Address" name="ipv4_src">
+                                <small class="form-text text-muted">empty if not in use</small>
+                            </div>
+
+                        </div>
+                    </div>
+
                 </div>
             </div>
 
@@ -172,6 +184,31 @@
 
         {% elif data["openflow"] == 'OF_13' %} {% endif %}
     </div>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            // default state, show aa only
+            $(".ip").hide()
+
+            $("#ip").change(function () {
+                $(".ip").hide();
+
+                switch ($("#ip option:selected").val()) {
+                    case "0x0800":
+                        {
+                            $("#ipv4").show();
+                            break;
+                        }
+                    case "0x86DD":
+                        {
+                            $("#ipv6").show();
+                            break;
+                        }
+                }
+            })
+        });
+    </script>
+
 </body>
 
 </html>
