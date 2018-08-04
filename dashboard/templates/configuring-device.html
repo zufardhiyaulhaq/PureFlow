@@ -47,9 +47,8 @@
             </div>
         </div>
         {% if data["openflow"] == 'OF_10' %}
-        <form method="POST" action="/configuring/controller">
-            <input type="hidden" readonly name="device-type" value={{ data[ "deviceid"] }}>
-            <input type="hidden" readonly name="device-type" value={{ data[ "openflow"] }}>
+        <form method="POST" action="/configuring/controller" id="form">
+            <input type="hidden" readonly name="deviceid" value={{ data[ "deviceid"] }}>
 
             <div class="card">
                 <div class="card-body">
@@ -57,25 +56,25 @@
 
                     <div class="form-group">
                         <label for="in_port">In Port</label>
-                        <input type="text" class="form-control" id="in_port" placeholder="In Port Value" name="in_port">
+                        <input type="text" class="form-control" id="selector.criteria.type.in_port.value" placeholder="In Port Value" name="selector.criteria.type.in_port.value">
                         <small class="form-text text-muted">empty if not in use</small>
                     </div>
 
                     <div class="form-group">
                         <label for="eth_src">Source MAC Address</label>
-                        <input type="text" class="form-control" id="eth_src" placeholder="Source MAC Address" name="eth_src">
+                        <input type="text" class="form-control" id="selector.criteria.type.eth_src.value" placeholder="Source MAC Address" name="selector.criteria.type.eth_src.value">
                         <small class="form-text text-muted">empty if not in use</small>
                     </div>
 
                     <div class="form-group">
                         <label for="eth_dst">Destination MAC Address</label>
-                        <input type="text" class="form-control" id="eth_dst" placeholder="Destination MAC Address" name="eth_dst">
+                        <input type="text" class="form-control" id="selector.criteria.type.eth_dst.value" placeholder="Destination MAC Address" name="selector.criteria.type.eth_dst.value">
                         <small class="form-text text-muted">empty if not in use</small>
                     </div>
 
                     <div class="form-group">
                         <label for="eth_type">Ethernet Type</label>
-                        <select class="custom-select" name="eth_type" id="ip">
+                        <select class="custom-select" name="selector.criteria.type.eth_type.value" id="ip">
                             <option value="">None</option>
                             <option value="0x0800">IPv4</option>
                         </select>
@@ -87,12 +86,12 @@
                         <div class="card-body">
                             <div class="form-group">
                                 <label for="ipv4_src">Source IPv4 Address</label>
-                                <input type="text" class="form-control" id="ipv4_src" placeholder="Source IPv4 Address" name="ipv4_src">
+                                <input type="text" class="form-control" id="ipv4_src" placeholder="Source IPv4 Address" name="selector.criteria.type.ipv4_src.value">
                                 <small class="form-text text-muted">empty if not in use</small>
                             </div>
                             <div class="form-group">
                                 <label for="ipv4_dst">Destination IPv4 Address</label>
-                                <input type="text" class="form-control" id="ipv4_dst" placeholder="Destination IPv4 Address" name="ipv4_dst">
+                                <input type="text" class="form-control" id="ipv4_dst" placeholder="Destination IPv4 Address" name="selector.criteria.type.ipv4_dst.value">
                                 <small class="form-text text-muted">empty if not in use</small>
                             </div>
                             <small class="form-text text-muted">Use IPv4 if you choose IPv4 in IP Protocol</small>
@@ -173,11 +172,75 @@
     </div>
 
     {% if data["openflow"] == 'OF_10' %}
-
     <script type="text/javascript">
         $(document).ready(function () {
-            $(".ip").hide()
+            $("#selector.criteria.type.in_port.value").change(function () {
+                if ($("#selector.criteria.type.in_port.value").val() == "") {
+                    $("#selector.criteria.type.in_port").remove();
+                } else {
+                    $("#selector.criteria.type.in_port").remove();
+                    $("#form").append(
+                        '<input type="hidden" id="selector.criteria.type.in_port" readonly name="selector.criteria.type.in_port" value="IN_PORT">'
+                    )
+                }
+            })
 
+            $("#selector.criteria.type.eth_src.value").change(function () {
+                if ($("#selector.criteria.type.eth_src.value").val() == "") {
+                    $("#selector.criteria.type.eth_src").remove();
+                } else {
+                    $("#selector.criteria.type.eth_src").remove();
+                    $("#form").append(
+                        '<input type="hidden" id="selector.criteria.type.eth_src" readonly name="selector.criteria.type.eth_src" value="ETH_SRC">'
+                    )
+                }
+            })
+
+            $("#selector.criteria.type.eth_dst.value").change(function () {
+                if ($("#selector.criteria.type.eth_dst.value").val() == "") {
+                    $("#selector.criteria.type.eth_dst").remove();
+                } else {
+                    $("#selector.criteria.type.eth_dst").remove();
+                    $("#form").append(
+                        '<input type="hidden" id="selector.criteria.type.eth_dst" readonly name="selector.criteria.type.eth_dst" value="ETH_DST">'
+                    )
+                }
+            })
+
+            $("#selector.criteria.type.eth_type.value").change(function () {
+                if ($("#selector.criteria.type.eth_type.value").val() == "") {
+                    $("#selector.criteria.type.eth_type").remove();
+                } else {
+                    $("#selector.criteria.type.eth_type").remove();
+                    $("#form").append(
+                        '<input type="hidden" id="selector.criteria.type.eth_type" readonly name="selector.criteria.type.eth_type" value="ETH_TYPE">'
+                    )
+                }
+            })
+
+            $("#selector.criteria.type.ipv4_src.value").change(function () {
+                if ($("#selector.criteria.type.ipv4_src.value").val() == "") {
+                    $("#selector.criteria.type.ipv4_src").remove();
+                } else {
+                    $("#selector.criteria.type.ipv4_src").remove();
+                    $("#form").append(
+                        '<input type="hidden" id="selector.criteria.type.ipv4_src" readonly name="selector.criteria.type.ipv4_src" value="IPV4_SRC">'
+                    )
+                }
+            })
+
+            $("#selector.criteria.type.ipv4_dst.value").change(function () {
+                if ($("#selector.criteria.type.ipv4_dst.value").val() == "") {
+                    $("#selector.criteria.type.ipv4_dst").remove();
+                } else {
+                    $("#selector.criteria.type.ipv4_dst").remove();
+                    $("#form").append(
+                        '<input type="hidden" id="selector.criteria.type.ipv4_dst" readonly name="selector.criteria.type.ipv4_dst" value="IPV4_DST">'
+                    )
+                }
+            })
+
+            $(".ip").hide()
             $("#ip").change(function () {
                 $(".ip").hide();
 
@@ -196,7 +259,6 @@
             })
 
             $(".protocol").hide()
-
             $("#protocol").change(function () {
                 $(".protocol").hide();
 
@@ -208,12 +270,12 @@
                         }
                     case "17":
                         {
-                            $("#udp").hide();
+                            $("#udp").show();
                             break;
                         }
                     case "":
                         {
-                            $(".ip").hide();
+                            $(".protocol").hide();
                             break;
                         }
                 }
@@ -222,7 +284,6 @@
     </script>
 
     {% elif data["openflow"] == 'OF_13' %}
-
     <script type="text/javascript">
         $(document).ready(function () {
             // default state, show aa only
@@ -248,6 +309,7 @@
     </script>
 
     {% endif %}
+
 </body>
 
 </html>
