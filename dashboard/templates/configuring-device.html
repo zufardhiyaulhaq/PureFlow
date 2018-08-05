@@ -170,6 +170,24 @@
                                 <small class="form-text text-muted">empty if not in use</small>
                             </div>
 
+                            <div class="form-group">
+                                <label for="treatment.instructions.eth_dst">Change Destination MAC</label>
+                                <input type="text" class="form-control" id="treatment.instructions.eth_dst.value" placeholder="Destination MAC Address" name="treatment.instructions.eth_dst.value">
+                                <small class="form-text text-muted">empty if not in use</small>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="treatment.instructions.ipv4_src">Change Source IP</label>
+                                <input type="text" class="form-control" id="treatment.instructions.ipv4_src.value" placeholder="Source IP Address" name="treatment.instructions.ipv4_src.value">
+                                <small class="form-text text-muted">empty if not in use</small>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="treatment.instructions.ipv4_dst">Change Destination IP</label>
+                                <input type="text" class="form-control" id="treatment.instructions.ipv4_dst.value" placeholder="Destination IP Address" name="treatment.instructions.ipv4_dst.value">
+                                <small class="form-text text-muted">empty if not in use</small>
+                            </div>
+
                         </div>
                     </div>
 
@@ -307,7 +325,6 @@
             })
 
             // Action Selector
-
             $("#treatment.instructions.output.value").change(function () {
                 if ($("#treatment.instructions.output.value").val() == "") {
                     $("#treatment.instructions.output").remove();
@@ -349,7 +366,50 @@
                 }
             })
 
+            $("#treatment.instructions.eth_dst.value").change(function () {
+                if ($("#treatment.instructions.eth_dst.value").val() == "") {
+                    $("#treatment.instructions.eth_dst").remove();
+                    $("#treatment.instructions.eth_dst.subtype").remove();
+                } else {
+                    $("#treatment.instructions.eth_dst").remove();
+                    $("#form").append(
+                        '<input type="hidden" id="treatment.instructions.eth_dst" readonly name="treatment.instructions.eth_dst" value="L2MODIFICATION">'
+                    )
+                    $("#form").append(
+                        '<input type="hidden" id="treatment.instructions.eth_dst.subtype" readonly name="treatment.instructions.eth_dst.subtype" value="ETH_DST">'
+                    )
+                }
+            })
 
+            $("#treatment.instructions.ipv4_src.value").change(function () {
+                if ($("#treatment.instructions.ipv4_src.value").val() == "") {
+                    $("#treatment.instructions.ipv4_src").remove();
+                    $("#treatment.instructions.ipv4_src.subtype").remove();
+                } else {
+                    $("#treatment.instructions.ipv4_src").remove();
+                    $("#form").append(
+                        '<input type="hidden" id="treatment.instructions.ipv4_src" readonly name="treatment.instructions.ipv4_src" value="L3MODIFICATION">'
+                    )
+                    $("#form").append(
+                        '<input type="hidden" id="treatment.instructions.ipv4_src.subtype" readonly name="treatment.instructions.ipv4_src.subtype" value="IPV4_SRC">'
+                    )
+                }
+            })
+
+            $("#treatment.instructions.ipv4_dst.value").change(function () {
+                if ($("#treatment.instructions.ipv4_dst.value").val() == "") {
+                    $("#treatment.instructions.ipv4_dst").remove();
+                    $("#treatment.instructions.ipv4_dst.subtype").remove();
+                } else {
+                    $("#treatment.instructions.ipv4_dst").remove();
+                    $("#form").append(
+                        '<input type="hidden" id="treatment.instructions.ipv4_dst" readonly name="treatment.instructions.ipv4_dst" value="L3MODIFICATION">'
+                    )
+                    $("#form").append(
+                        '<input type="hidden" id="treatment.instructions.ipv4_dst.subtype" readonly name="treatment.instructions.ipv4_dst.subtype" value="IPV4_DST">'
+                    )
+                }
+            })
 
             // Hidden for form fuction
             $(".ip").hide()

@@ -58,7 +58,6 @@ def configuring_api():
     print (type(data))
     print (data)
 
-    
     return ("success!")
 
 @app.route('/provisioning')
