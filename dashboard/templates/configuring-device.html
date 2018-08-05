@@ -153,9 +153,20 @@
                         <div class="card-body">
 
                             <div class="form-group">
-                                <label for="ipv4_src">OUTPUT</label>
-                                <input type="hidden" readonly name="action.output" value="OUTPUT">
-                                <input type="text" class="form-control" id="ipv4_src" placeholder="Source IPv4 Address" name="ipv4_src">
+                                <label for="treatment.instructions.output">Change Output Port</label>
+                                <input type="text" class="form-control" id="treatment.instructions.output.value" placeholder="Output Port" name="treatment.instructions.output.value">
+                                <small class="form-text text-muted">empty if not in use</small>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="treatment.instructions.vlanid">Change VLAN ID</label>
+                                <input type="text" class="form-control" id="treatment.instructions.vlanid.value" placeholder="VLAN ID" name="treatment.instructions.vlanid.value">
+                                <small class="form-text text-muted">empty if not in use</small>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="treatment.instructions.eth_src">Change Source MAC</label>
+                                <input type="text" class="form-control" id="treatment.instructions.eth_src.value" placeholder="Source MAC Address" name="treatment.instructions.eth_src.value">
                                 <small class="form-text text-muted">empty if not in use</small>
                             </div>
 
@@ -240,7 +251,6 @@
                 }
             })
 
-
             $("#selector.criteria.type.ip_proto.value").change(function () {
                 if ($("#selector.criteria.type.ip_proto.value").val() == "") {
                     $("#selector.criteria.type.ip_proto").remove();
@@ -296,6 +306,52 @@
                 }
             })
 
+            // Action Selector
+
+            $("#treatment.instructions.output.value").change(function () {
+                if ($("#treatment.instructions.output.value").val() == "") {
+                    $("#treatment.instructions.output").remove();
+                } else {
+                    $("#treatment.instructions.output").remove();
+                    $("#form").append(
+                        '<input type="hidden" id="treatment.instructions.output" readonly name="treatment.instructions.output" value="OUTPUT">'
+                    )
+                }
+            })
+
+            $("#treatment.instructions.vlanid.value").change(function () {
+                if ($("#treatment.instructions.vlanid.value").val() == "") {
+                    $("#treatment.instructions.vlanid").remove();
+                    $("#treatment.instructions.vlanid.subtype").remove();
+                } else {
+                    $("#treatment.instructions.vlanid").remove();
+                    $("#form").append(
+                        '<input type="hidden" id="treatment.instructions.vlanid" readonly name="treatment.instructions.vlanid" value="L2MODIFICATION">'
+                    )
+                    $("#form").append(
+                        '<input type="hidden" id="treatment.instructions.vlanid.subtype" readonly name="treatment.instructions.vlanid.subtype" value="VLAN_ID">'
+                    )
+                }
+            })
+
+            $("#treatment.instructions.eth_src.value").change(function () {
+                if ($("#treatment.instructions.eth_src.value").val() == "") {
+                    $("#treatment.instructions.eth_src").remove();
+                    $("#treatment.instructions.eth_src.subtype").remove();
+                } else {
+                    $("#treatment.instructions.eth_src").remove();
+                    $("#form").append(
+                        '<input type="hidden" id="treatment.instructions.eth_src" readonly name="treatment.instructions.eth_src" value="L2MODIFICATION">'
+                    )
+                    $("#form").append(
+                        '<input type="hidden" id="treatment.instructions.eth_src.subtype" readonly name="treatment.instructions.eth_src.subtype" value="ETH_SRC">'
+                    )
+                }
+            })
+
+
+
+            // Hidden for form fuction
             $(".ip").hide()
             $("#ip").change(function () {
                 $(".ip").hide();
