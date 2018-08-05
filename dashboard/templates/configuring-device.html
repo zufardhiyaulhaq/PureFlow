@@ -100,7 +100,7 @@
                             <br/>
                             <div class="form-group">
                                 <label for="ip_proto">IP Protocol</label>
-                                <select class="custom-select" name="ip_proto" id="protocol">
+                                <select class="custom-select" name="selector.criteria.type.ip_proto.value" id="protocol">
                                     <option value="">None</option>
                                     <option value="6">TCP</option>
                                     <option value="17">UDP</option>
@@ -113,15 +113,15 @@
                                 <div class="card-body">
                                     <div class="form-group">
                                         <label for="tcp_src">Source TCP</label>
-                                        <input type="text" class="form-control" id="tcp_src" placeholder="Source TCP" name="tcp_src">
+                                        <input type="text" class="form-control" id="tcp_src" placeholder="Source TCP" name="selector.criteria.type.tcp_src.value">
                                         <small class="form-text text-muted">empty if not in use</small>
                                     </div>
                                     <div class="form-group">
                                         <label for="tcp_dst">Destination TCP</label>
-                                        <input type="text" class="form-control" id="tcp_dst" placeholder="Destination TCP" name="tcp_dst">
+                                        <input type="text" class="form-control" id="tcp_dst" placeholder="Destination TCP" name="selector.criteria.type.tcp_dst.value">
                                         <small class="form-text text-muted">empty if not in use</small>
                                     </div>
-                                    <small class="form-text text-muted">Use UDP if you choose UDP in IP Protocol</small>
+                                    <small class="form-text text-muted">Use TCP if you choose TCP in IP Protocol</small>
                                 </div>
                             </div>
 
@@ -129,12 +129,12 @@
                                 <div class="card-body">
                                     <div class="form-group">
                                         <label for="udp_src">Source UDP</label>
-                                        <input type="text" class="form-control" id="udp_src" placeholder="Source UDP" name="udp_src">
+                                        <input type="text" class="form-control" id="udp_src" placeholder="Source UDP" name="selector.criteria.type.udp_src.value">
                                         <small class="form-text text-muted">empty if not in use</small>
                                     </div>
                                     <div class="form-group">
                                         <label for="udp_dst">Destination UDP</label>
-                                        <input type="text" class="form-control" id="udp_dst" placeholder="Destination UDP" name="udp_dst">
+                                        <input type="text" class="form-control" id="udp_dst" placeholder="Destination UDP" name="selector.criteria.type.udp_dst.value">
                                         <small class="form-text text-muted">empty if not in use</small>
                                     </div>
                                     <small class="form-text text-muted">Use TCP if you choose TCP in IP Protocol</small>
@@ -236,6 +236,62 @@
                     $("#selector.criteria.type.ipv4_dst").remove();
                     $("#form").append(
                         '<input type="hidden" id="selector.criteria.type.ipv4_dst" readonly name="selector.criteria.type.ipv4_dst" value="IPV4_DST">'
+                    )
+                }
+            })
+
+
+            $("#selector.criteria.type.ip_proto.value").change(function () {
+                if ($("#selector.criteria.type.ip_proto.value").val() == "") {
+                    $("#selector.criteria.type.ip_proto").remove();
+                } else {
+                    $("#selector.criteria.type.ip_proto").remove();
+                    $("#form").append(
+                        '<input type="hidden" id="selector.criteria.type.ip_proto" readonly name="selector.criteria.type.ip_proto" value="IP_PROTO">'
+                    )
+                }
+            })
+
+            $("#selector.criteria.type.udp_src.value").change(function () {
+                if ($("#selector.criteria.type.udp_src.value").val() == "") {
+                    $("#selector.criteria.type.udp_src").remove();
+                } else {
+                    $("#selector.criteria.type.udp_src").remove();
+                    $("#form").append(
+                        '<input type="hidden" id="selector.criteria.type.udp_src" readonly name="selector.criteria.type.udp_src" value="UDP_SRC">'
+                    )
+                }
+            })
+
+            $("#selector.criteria.type.udp_dst.value").change(function () {
+                if ($("#selector.criteria.type.udp_dst.value").val() == "") {
+                    $("#selector.criteria.type.udp_dst").remove();
+                } else {
+                    $("#selector.criteria.type.udp_dst").remove();
+                    $("#form").append(
+                        '<input type="hidden" id="selector.criteria.type.udp_dst" readonly name="selector.criteria.type.udp_dst" value="UDP_DST">'
+                    )
+                }
+            })
+
+            $("#selector.criteria.type.tcp_src.value").change(function () {
+                if ($("#selector.criteria.type.tcp_src.value").val() == "") {
+                    $("#selector.criteria.type.tcp_src").remove();
+                } else {
+                    $("#selector.criteria.type.tcp_src").remove();
+                    $("#form").append(
+                        '<input type="hidden" id="selector.criteria.type.tcp_src" readonly name="selector.criteria.type.tcp_src" value="TCP_SRC">'
+                    )
+                }
+            })
+
+            $("#selector.criteria.type.tcp_dst.value").change(function () {
+                if ($("#selector.criteria.type.tcp_dst.value").val() == "") {
+                    $("#selector.criteria.type.tcp_dst").remove();
+                } else {
+                    $("#selector.criteria.type.tcp_dst").remove();
+                    $("#form").append(
+                        '<input type="hidden" id="selector.criteria.type.tcp_dst" readonly name="selector.criteria.type.tcp_dst" value="TCP_DST">'
                     )
                 }
             })
