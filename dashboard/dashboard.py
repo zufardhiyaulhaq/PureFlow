@@ -64,9 +64,10 @@ def configuring_api():
     raw = request.form.to_dict(flat=True)
     res = {k.encode('utf8'): v.encode('utf8') for k, v in raw.items()}
     data = dict((k, v) for k, v in res.iteritems() if v)
-    # Priority, Permanent, is not defined in form
+    # Priority, Permanent, is not defined in form, so we defined inside json files, soon will be update in dashboard
+    # support action change only until layer3
     
-    json = {
+    json_data = {
         "priority": 40000,
         "isPermanent": True,
         "deviceId": None,
@@ -100,16 +101,6 @@ def configuring_api():
                     "type": "L3MODIFICATION",
                     "subtype": "IPV4_DST",
                     "ip": None
-                },
-                {
-                    "type": "L4MODIFICATION",
-                    "subtype": "TCP_SRC",
-                    "tcpPort": None
-                },
-                {
-                    "type": "L4MODIFICATION",
-                    "subtype": "UDP_SRC",
-                    "udpPort": None
                 }
             ]
         },
@@ -168,134 +159,196 @@ def configuring_api():
     }
 
     #Device ID
-    # jika key deviceid tidak ditemukan didalam dict data. hapus key didalam json files
+    # jika key deviceid tidak ditemukan didalam dict data. hapus key didalam json_data files
     try:
         data['deviceid']
     except KeyError:
-        del json["deviceId"]
+        del json_data["deviceId"]
     else:
-        json['deviceId']=data['deviceid']
+        json_data['deviceId']=data['deviceid']
 
     #Selector In Port
     try:
         data['selector.criteria.type.in_port']
     except KeyError:
-        list = next((index for (index, d) in enumerate(json['selector']['criteria']) if d["type"] == "IN_PORT"), None)
-        del json['selector']['criteria'][list]
+        list = next((index for (index, d) in enumerate(json_data['selector']['criteria']) if d["type"] == "IN_PORT"), None)
+        del json_data['selector']['criteria'][list]
     else:
-        list = next((index for (index, d) in enumerate(json['selector']['criteria']) if d["type"] == "IN_PORT"), None)
-        json['selector']['criteria'][list]['port']=data['selector.criteria.type.in_port.value']
+        list = next((index for (index, d) in enumerate(json_data['selector']['criteria']) if d["type"] == "IN_PORT"), None)
+        json_data['selector']['criteria'][list]['port']=data['selector.criteria.type.in_port.value']
 
     #Selector eth src
     try:
         data['selector.criteria.type.eth_src']
     except KeyError:
-        list = next((index for (index, d) in enumerate(json['selector']['criteria']) if d["type"] == "ETH_SRC"), None)
-        del json['selector']['criteria'][list]
+        list = next((index for (index, d) in enumerate(json_data['selector']['criteria']) if d["type"] == "ETH_SRC"), None)
+        del json_data['selector']['criteria'][list]
     else:
-        list = next((index for (index, d) in enumerate(json['selector']['criteria']) if d["type"] == "ETH_SRC"), None)
-        json['selector']['criteria'][list]['mac']=data['selector.criteria.type.eth_src.value']
+        list = next((index for (index, d) in enumerate(json_data['selector']['criteria']) if d["type"] == "ETH_SRC"), None)
+        json_data['selector']['criteria'][list]['mac']=data['selector.criteria.type.eth_src.value']
 
     #Selector eth dst
     try:
         data['selector.criteria.type.eth_dst']
     except KeyError:
-        list = next((index for (index, d) in enumerate(json['selector']['criteria']) if d["type"] == "ETH_DST"), None)
-        del json['selector']['criteria'][list]
+        list = next((index for (index, d) in enumerate(json_data['selector']['criteria']) if d["type"] == "ETH_DST"), None)
+        del json_data['selector']['criteria'][list]
     else:
-        list = next((index for (index, d) in enumerate(json['selector']['criteria']) if d["type"] == "ETH_DST"), None)
-        json['selector']['criteria'][list]['mac']=data['selector.criteria.type.eth_dst.value']
+        list = next((index for (index, d) in enumerate(json_data['selector']['criteria']) if d["type"] == "ETH_DST"), None)
+        json_data['selector']['criteria'][list]['mac']=data['selector.criteria.type.eth_dst.value']
 
     #Selector Eth Type
     try:
         data['selector.criteria.type.eth_type']
     except KeyError:
-        list = next((index for (index, d) in enumerate(json['selector']['criteria']) if d["type"] == "ETH_TYPE"), None)
-        del json['selector']['criteria'][list]
+        list = next((index for (index, d) in enumerate(json_data['selector']['criteria']) if d["type"] == "ETH_TYPE"), None)
+        del json_data['selector']['criteria'][list]
     else:
-        list = next((index for (index, d) in enumerate(json['selector']['criteria']) if d["type"] == "ETH_TYPE"), None)
-        json['selector']['criteria'][list]['ethType']=data['selector.criteria.type.eth_type.value']
+        list = next((index for (index, d) in enumerate(json_data['selector']['criteria']) if d["type"] == "ETH_TYPE"), None)
+        json_data['selector']['criteria'][list]['ethType']=data['selector.criteria.type.eth_type.value']
 
     #Selector vlan id
     try:
         data['selector.criteria.type.vlan_vid']
     except KeyError:
-        list = next((index for (index, d) in enumerate(json['selector']['criteria']) if d["type"] == "VLAN_VID"), None)
-        del json['selector']['criteria'][list]
+        list = next((index for (index, d) in enumerate(json_data['selector']['criteria']) if d["type"] == "VLAN_VID"), None)
+        del json_data['selector']['criteria'][list]
     else:
-        list = next((index for (index, d) in enumerate(json['selector']['criteria']) if d["type"] == "VLAN_VID"), None)
-        json['selector']['criteria'][list]['vlanId']=data['selector.criteria.type.vlan_vid.value']
+        list = next((index for (index, d) in enumerate(json_data['selector']['criteria']) if d["type"] == "VLAN_VID"), None)
+        json_data['selector']['criteria'][list]['vlanId']=data['selector.criteria.type.vlan_vid.value']
 
     #Selector ip proto
     try:
         data['selector.criteria.type.ip_proto']
     except KeyError:
-        list = next((index for (index, d) in enumerate(json['selector']['criteria']) if d["type"] == "IP_PROTO"), None)
-        del json['selector']['criteria'][list]
+        list = next((index for (index, d) in enumerate(json_data['selector']['criteria']) if d["type"] == "IP_PROTO"), None)
+        del json_data['selector']['criteria'][list]
     else:
-        list = next((index for (index, d) in enumerate(json['selector']['criteria']) if d["type"] == "IP_PROTO"), None)
-        json['selector']['criteria'][list]['protocol']=data['selector.criteria.type.ip_proto.value']
+        list = next((index for (index, d) in enumerate(json_data['selector']['criteria']) if d["type"] == "IP_PROTO"), None)
+        json_data['selector']['criteria'][list]['protocol']=data['selector.criteria.type.ip_proto.value']
 
     #Selector ipv4 src
     try:
         data['selector.criteria.type.ipv4_src']
     except KeyError:
-        list = next((index for (index, d) in enumerate(json['selector']['criteria']) if d["type"] == "IPV4_SRC"), None)
-        del json['selector']['criteria'][list]
+        list = next((index for (index, d) in enumerate(json_data['selector']['criteria']) if d["type"] == "IPV4_SRC"), None)
+        del json_data['selector']['criteria'][list]
     else:
-        list = next((index for (index, d) in enumerate(json['selector']['criteria']) if d["type"] == "IPV4_SRC"), None)
-        json['selector']['criteria'][list]['ip']=data['selector.criteria.type.ipv4_src.value']
+        list = next((index for (index, d) in enumerate(json_data['selector']['criteria']) if d["type"] == "IPV4_SRC"), None)
+        json_data['selector']['criteria'][list]['ip']=data['selector.criteria.type.ipv4_src.value']
 
     #Selector ipv4 dst
     try:
         data['selector.criteria.type.ipv4_dst']
     except KeyError:
-        list = next((index for (index, d) in enumerate(json['selector']['criteria']) if d["type"] == "IPV4_DST"), None)
-        del json['selector']['criteria'][list]
+        list = next((index for (index, d) in enumerate(json_data['selector']['criteria']) if d["type"] == "IPV4_DST"), None)
+        del json_data['selector']['criteria'][list]
     else:
-        list = next((index for (index, d) in enumerate(json['selector']['criteria']) if d["type"] == "IPV4_DST"), None)
-        json['selector']['criteria'][list]['ip']=data['selector.criteria.type.ipv4_dst.value']
+        list = next((index for (index, d) in enumerate(json_data['selector']['criteria']) if d["type"] == "IPV4_DST"), None)
+        json_data['selector']['criteria'][list]['ip']=data['selector.criteria.type.ipv4_dst.value']
 
     #Selector tcp src
     try:
         data['selector.criteria.type.tcp_src']
     except KeyError:
-        list = next((index for (index, d) in enumerate(json['selector']['criteria']) if d["type"] == "TCP_SRC"), None)
-        del json['selector']['criteria'][list]
+        list = next((index for (index, d) in enumerate(json_data['selector']['criteria']) if d["type"] == "TCP_SRC"), None)
+        del json_data['selector']['criteria'][list]
     else:
-        list = next((index for (index, d) in enumerate(json['selector']['criteria']) if d["type"] == "TCP_SRC"), None)
-        json['selector']['criteria'][list]['tcpPort']=data['selector.criteria.type.tcp_src.value']
+        list = next((index for (index, d) in enumerate(json_data['selector']['criteria']) if d["type"] == "TCP_SRC"), None)
+        json_data['selector']['criteria'][list]['tcpPort']=data['selector.criteria.type.tcp_src.value']
 
     #Selector tcp dst
     try:
         data['selector.criteria.type.tcp_dst']
     except KeyError:
-        list = next((index for (index, d) in enumerate(json['selector']['criteria']) if d["type"] == "TCP_DST"), None)
-        del json['selector']['criteria'][list]
+        list = next((index for (index, d) in enumerate(json_data['selector']['criteria']) if d["type"] == "TCP_DST"), None)
+        del json_data['selector']['criteria'][list]
     else:
-        list = next((index for (index, d) in enumerate(json['selector']['criteria']) if d["type"] == "TCP_DST"), None)
-        json['selector']['criteria'][list]['tcpPort']=data['selector.criteria.type.tcp_dst.value']
+        list = next((index for (index, d) in enumerate(json_data['selector']['criteria']) if d["type"] == "TCP_DST"), None)
+        json_data['selector']['criteria'][list]['tcpPort']=data['selector.criteria.type.tcp_dst.value']
 
     #Selector udp src
     try:
         data['selector.criteria.type.udp_src']
     except KeyError:
-        list = next((index for (index, d) in enumerate(json['selector']['criteria']) if d["type"] == "UDP_SRC"), None)
-        del json['selector']['criteria'][list]
+        list = next((index for (index, d) in enumerate(json_data['selector']['criteria']) if d["type"] == "UDP_SRC"), None)
+        del json_data['selector']['criteria'][list]
     else:
-        list = next((index for (index, d) in enumerate(json['selector']['criteria']) if d["type"] == "UDP_SRC"), None)
-        json['selector']['criteria'][list]['udpPort']=data['selector.criteria.type.udp_src.value']
+        list = next((index for (index, d) in enumerate(json_data['selector']['criteria']) if d["type"] == "UDP_SRC"), None)
+        json_data['selector']['criteria'][list]['udpPort']=data['selector.criteria.type.udp_src.value']
 
     #Selector udp dst
     try:
         data['selector.criteria.type.udp_dst']
     except KeyError:
-        list = next((index for (index, d) in enumerate(json['selector']['criteria']) if d["type"] == "UDP_DST"), None)
-        del json['selector']['criteria'][list]
+        list = next((index for (index, d) in enumerate(json_data['selector']['criteria']) if d["type"] == "UDP_DST"), None)
+        del json_data['selector']['criteria'][list]
     else:
-        list = next((index for (index, d) in enumerate(json['selector']['criteria']) if d["type"] == "UDP_DST"), None)
-        json['selector']['criteria'][list]['udpPort']=data['selector.criteria.type.udp_dst.value']
+        list = next((index for (index, d) in enumerate(json_data['selector']['criteria']) if d["type"] == "UDP_DST"), None)
+        json_data['selector']['criteria'][list]['udpPort']=data['selector.criteria.type.udp_dst.value']
 
+    #instruction output
+    try:
+        data['treatment.instructions.output']
+    except KeyError:
+        list = next((index for (index, d) in enumerate(json_data['treatment']['instructions']) if d["type"] == "OUTPUT"), None)
+        del json_data['treatment']['instructions'][list]
+    else:
+        list = next((index for (index, d) in enumerate(json_data['treatment']['instructions']) if d["type"] == "OUTPUT"), None)
+        json_data['treatment']['instructions'][list]['port']=data['treatment.instructions.output.value']
+
+    #instruction vlan id
+    try:
+        data['treatment.instructions.vlanid']
+    except KeyError:
+        list = next((index for (index, d) in enumerate(json_data['treatment']['instructions']) if d["subtype"] == "VLAN_ID"), None)
+        del json_data['treatment']['instructions'][list]
+    else:
+        list = next((index for (index, d) in enumerate(json_data['treatment']['instructions']) if d["subtype"] == "VLAN_ID"), None)
+        json_data['treatment']['instructions'][list]['vlanId']=data['treatment.instructions.vlanid.value']
+
+    #instruction eth src
+    try:
+        data['treatment.instructions.eth_src']
+    except KeyError:
+        list = next((index for (index, d) in enumerate(json_data['treatment']['instructions']) if d["subtype"] == "ETH_SRC"), None)
+        del json_data['treatment']['instructions'][list]
+    else:
+        list = next((index for (index, d) in enumerate(json_data['treatment']['instructions']) if d["subtype"] == "ETH_SRC"), None)
+        json_data['treatment']['instructions'][list]['mac']=data['treatment.instructions.eth_src.value']
+
+    #instruction eth dst
+    try:
+        data['treatment.instructions.eth_dst']
+    except KeyError:
+        list = next((index for (index, d) in enumerate(json_data['treatment']['instructions']) if d["subtype"] == "ETH_DST"), None)
+        del json_data['treatment']['instructions'][list]
+    else:
+        list = next((index for (index, d) in enumerate(json_data['treatment']['instructions']) if d["subtype"] == "ETH_DST"), None)
+        json_data['treatment']['instructions'][list]['mac']=data['treatment.instructions.eth_dst.value']
+
+    #instruction ipv4 src
+    try:
+        data['treatment.instructions.ipv4_src']
+    except KeyError:
+        list = next((index for (index, d) in enumerate(json_data['treatment']['instructions']) if d["subtype"] == "IPV4_SRC"), None)
+        del json_data['treatment']['instructions'][list]
+    else:
+        list = next((index for (index, d) in enumerate(json_data['treatment']['instructions']) if d["subtype"] == "IPV4_SRC"), None)
+        json_data['treatment']['instructions'][list]['ip']=data['treatment.instructions.ipv4_src.value']
+
+    #instruction ipv4 dst
+    try:
+        data['treatment.instructions.ipv4_dst']
+    except KeyError:
+        list = next((index for (index, d) in enumerate(json_data['treatment']['instructions']) if d["subtype"] == "IPV4_DST"), None)
+        del json_data['treatment']['instructions'][list]
+    else:
+        list = next((index for (index, d) in enumerate(json_data['treatment']['instructions']) if d["subtype"] == "IPV4_DST"), None)
+        json_data['treatment']['instructions'][list]['ip']=data['treatment.instructions.ipv4_dst.value']
+
+    api_json = json.dumps(json_data)
+    print (api_json)
     return ("success!")
 
 
