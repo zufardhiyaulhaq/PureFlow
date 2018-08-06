@@ -24,3 +24,7 @@ For provisioning devices, its use Ansible SSH based method to configure devices.
 For instalation procedure, go to docs directory on this repository
 
 ## **Secrenshot**
+<span style="display:block;text-align:center">![architecture](https://raw.githubusercontent.com/zufardhiyaulhaq/PureFlow/master/assets/pureflow1.png)</span>
+<span style="display:block;text-align:center">![architecture](https://raw.githubusercontent.com/zufardhiyaulhaq/PureFlow/master/assets/pureflow2.png)</span>
+<span style="display:block;text-align:center">![architecture](https://raw.githubusercontent.com/zufardhiyaulhaq/PureFlow/master/assets/pureflow3.png)</span>
+<span style="display:block;text-align:center">![architecture](https://raw.githubusercontent.com/zufardhiyaulhaq/PureFlow/master/assets/pureflow4.png)</span>
