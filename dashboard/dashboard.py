@@ -358,6 +358,7 @@ def configuring_api():
         json_data['treatment']['instructions'][list]['ip']=data['treatment.instructions.ipv4_dst.value']
 
     api_json = json.dumps(json_data)
+    print (api_json)
     url = 'http://127.0.0.1:8181/onos/v1/flows'+data['deviceid']
     requests.post(url=url,  auth=("onos", "rocks"), data=api_json, headers={"content-type":"application/json"})
     return ("success!")
