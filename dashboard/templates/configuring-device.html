@@ -60,6 +60,12 @@
                     </div>
 
                     <div class="form-group">
+                        <label for="vlan_vid">In Port</label>
+                        <input type="text" class="form-control" id="selector_criteria_type_vlan_vid_value" placeholder="In Port Value" name="selector.criteria.type.vlan_vid.value">
+                        <small class="form-text text-muted">empty if not in use</small>
+                    </div>
+
+                    <div class="form-group">
                         <label for="eth_src">Source MAC Address</label>
                         <input type="text" class="form-control" id="selector_criteria_type_eth_src_value" placeholder="Source MAC Address" name="selector.criteria.type.eth_src.value">
                         <small class="form-text text-muted">empty if not in use</small>
@@ -232,6 +238,17 @@
                     $("#selector_criteria_type_eth_dst").remove();
                     $("#form").append(
                         '<input type="hidden" id="selector_criteria_type_eth_dst" readonly name="selector.criteria.type.eth_dst" value="ETH_DST">'
+                    )
+                }
+            })
+
+            $("#selector_criteria_type_vlan_vid_value").change(function () {
+                if ($("#selector_criteria_type_vlan_vid_value").val() == "") {
+                    $("#selector_criteria_type_vlan_vid").remove();
+                } else {
+                    $("#selector_criteria_type_vlan_vid").remove();
+                    $("#form").append(
+                        '<input type="hidden" id="selector_criteria_type_vlan_vid" readonly name="selector.criteria.type.vlan_vid" value="VLAN_VID">'
                     )
                 }
             })
