@@ -85,7 +85,7 @@ def configuring_api():
                     "type": "L2MODIFICATION",
                     "subtype": "ETH_SRC",
                     "mac": None
-                }
+                },
                 {
                     "type": "L2MODIFICATION",
                     "subtype": "ETH_DST",
