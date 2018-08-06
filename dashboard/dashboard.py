@@ -312,11 +312,9 @@ def configuring_api():
         data['treatment.instructions.vlanid']
     except KeyError:
         list = search(json_data['treatment']['instructions'],key='subtype', value='VLAN_ID')
-        #list = next((index for (index, d) in enumerate(json_data['treatment']['instructions']) if d["subtype"] == "VLAN_ID"), None)
         del json_data['treatment']['instructions'][list]
     else:
         list = search(json_data['treatment']['instructions'],key='subtype', value='VLAN_ID')
-        #list = next((index for (index, d) in enumerate(json_data['treatment']['instructions']) if d["subtype"] == "VLAN_ID"), None)
         json_data['treatment']['instructions'][list]['vlanId']=data['treatment.instructions.vlanid.value']
 
     #instruction eth src
@@ -324,11 +322,9 @@ def configuring_api():
         data['treatment.instructions.eth_src']
     except KeyError:
         list = search(json_data['treatment']['instructions'],key='subtype', value='ETH_SRC')
-        #list = next((index for (index, d) in enumerate(json_data['treatment']['instructions']) if d["subtype"] == "ETH_SRC"), None)
         del json_data['treatment']['instructions'][list]
     else:
         list = search(json_data['treatment']['instructions'],key='subtype', value='ETH_SRC')
-        #list = next((index for (index, d) in enumerate(json_data['treatment']['instructions']) if d["subtype"] == "ETH_SRC"), None)
         json_data['treatment']['instructions'][list]['mac']=data['treatment.instructions.eth_src.value']
 
     #instruction eth dst
@@ -336,11 +332,9 @@ def configuring_api():
         data['treatment.instructions.eth_dst']
     except KeyError:
         list = search(json_data['treatment']['instructions'],key='subtype', value='ETH_DST')
-        #list = next((index for (index, d) in enumerate(json_data['treatment']['instructions']) if d["subtype"] == "ETH_DST"), None)
         del json_data['treatment']['instructions'][list]
     else:
         list = search(json_data['treatment']['instructions'],key='subtype', value='ETH_DST')
-        #list = next((index for (index, d) in enumerate(json_data['treatment']['instructions']) if d["subtype"] == "ETH_DST"), None)
         json_data['treatment']['instructions'][list]['mac']=data['treatment.instructions.eth_dst.value']
 
     #instruction ipv4 src
@@ -348,11 +342,9 @@ def configuring_api():
         data['treatment.instructions.ipv4_src']
     except KeyError:
         list = search(json_data['treatment']['instructions'],key='subtype', value='IPV4_SRC')
-        #list = next((index for (index, d) in enumerate(json_data['treatment']['instructions']) if d["subtype"] == "IPV4_SRC"), None)
         del json_data['treatment']['instructions'][list]
     else:
         list = search(json_data['treatment']['instructions'],key='subtype', value='IPV4_SRC')
-        #list = next((index for (index, d) in enumerate(json_data['treatment']['instructions']) if d["subtype"] == "IPV4_SRC"), None)
         json_data['treatment']['instructions'][list]['ip']=data['treatment.instructions.ipv4_src.value']
 
     #instruction ipv4 dst
@@ -360,15 +352,14 @@ def configuring_api():
         data['treatment.instructions.ipv4_dst']
     except KeyError:
         list = search(json_data['treatment']['instructions'],key='subtype', value='IPV4_DST')
-        #list = next((index for (index, d) in enumerate(json_data['treatment']['instructions']) if d["subtype"] == "IPV4_DST"), None)
         del json_data['treatment']['instructions'][list]
     else:
         list = search(json_data['treatment']['instructions'],key='subtype', value='IPV4_DST')
-        #list = next((index for (index, d) in enumerate(json_data['treatment']['instructions']) if d["subtype"] == "IPV4_DST"), None)
         json_data['treatment']['instructions'][list]['ip']=data['treatment.instructions.ipv4_dst.value']
 
     api_json = json.dumps(json_data)
-    print (api_json)
+    url = 'http://127.0.0.1:8181/onos/v1/flows'+data['deviceid']
+    post = requests.post(url=url,  auth=(onos, rocks), data=api_json, headers={"content-type":"application/json"})
     return ("success!")
 
 
