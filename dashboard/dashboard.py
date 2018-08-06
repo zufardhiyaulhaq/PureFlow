@@ -63,7 +63,7 @@ def device():
 def configuring_api():
     raw = request.form.to_dict(flat=True)
     data = {k.encode('utf8'): v.encode('utf8') for k, v in raw.items()}
-    res = dict((k, v) for k, v in data.iteritems() if v is not None)
+    res = dict((k, v) for k, v in data.iteritems() if v)
     print (res)
     print (type(res))
     json = {
