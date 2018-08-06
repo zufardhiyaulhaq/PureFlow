@@ -134,7 +134,7 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="udp_dst">Destination UDP</label>
-                                        <input type="text" class="form-control" id="selector_criteria_type_dup_dst_value" placeholder="Destination UDP" name="selector.criteria.type.udp_dst.value">
+                                        <input type="text" class="form-control" id="selector_criteria_type_udp_dst_value" placeholder="Destination UDP" name="selector.criteria.type.udp_dst.value">
                                         <small class="form-text text-muted">empty if not in use</small>
                                     </div>
                                     <small class="form-text text-muted">Use TCP if you choose TCP in IP Protocol</small>
@@ -272,8 +272,16 @@
             $("#selector_criteria_type_ip_proto_value").change(function () {
                 if ($("#selector_criteria_type_ip_proto_value").val() == "") {
                     $("#selector_criteria_type_ip_proto").remove();
+                    $("#selector_criteria_type_udp_src").remove();
+                    $("#selector_criteria_type_tcp_src").remove();
+                    $("#selector_criteria_type_udp_dst").remove();
+                    $("#selector_criteria_type_tcp_src").remove();
                 } else {
                     $("#selector_criteria_type_ip_proto").remove();
+                    $("#selector_criteria_type_udp_src").remove();
+                    $("#selector_criteria_type_tcp_src").remove();
+                    $("#selector_criteria_type_udp_dst").remove();
+                    $("#selector_criteria_type_tcp_src").remove();
                     $("#form").append(
                         '<input type="hidden" id="selector_criteria_type_ip_proto" readonly name="selector.criteria.type.ip_proto" value="IP_PROTO">'
                     )
