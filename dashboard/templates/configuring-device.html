@@ -239,8 +239,22 @@
             $("#selector_criteria_type_eth_type_value").change(function () {
                 if ($("#selector_criteria_type_eth_type_value").val() == "") {
                     $("#selector_criteria_type_eth_type").remove();
+                    $("#selector_criteria_type_ipv4_dst").remove();
+                    $("#selector_criteria_type_ipv4_src").remove();
+                    $("#selector_criteria_type_ip_proto").remove();
+                    $("#selector_criteria_type_udp_src").remove();
+                    $("#selector_criteria_type_tcp_src").remove();
+                    $("#selector_criteria_type_udp_dst").remove();
+                    $("#selector_criteria_type_tcp_dst").remove();
                 } else {
                     $("#selector_criteria_type_eth_type").remove();
+                    $("#selector_criteria_type_ipv4_dst").remove();
+                    $("#selector_criteria_type_ipv4_src").remove();
+                    $("#selector_criteria_type_ip_proto").remove();
+                    $("#selector_criteria_type_udp_src").remove();
+                    $("#selector_criteria_type_tcp_src").remove();
+                    $("#selector_criteria_type_udp_dst").remove();
+                    $("#selector_criteria_type_tcp_dst").remove();
                     $("#form").append(
                         '<input type="hidden" id="selector_criteria_type_eth_type" readonly name="selector.criteria.type.eth_type" value="ETH_TYPE">'
                     )
@@ -275,13 +289,13 @@
                     $("#selector_criteria_type_udp_src").remove();
                     $("#selector_criteria_type_tcp_src").remove();
                     $("#selector_criteria_type_udp_dst").remove();
-                    $("#selector_criteria_type_tcp_src").remove();
+                    $("#selector_criteria_type_tcp_dst").remove();
                 } else {
                     $("#selector_criteria_type_ip_proto").remove();
                     $("#selector_criteria_type_udp_src").remove();
                     $("#selector_criteria_type_tcp_src").remove();
                     $("#selector_criteria_type_udp_dst").remove();
-                    $("#selector_criteria_type_tcp_src").remove();
+                    $("#selector_criteria_type_tcp_dst").remove();
                     $("#form").append(
                         '<input type="hidden" id="selector_criteria_type_ip_proto" readonly name="selector.criteria.type.ip_proto" value="IP_PROTO">'
                     )
