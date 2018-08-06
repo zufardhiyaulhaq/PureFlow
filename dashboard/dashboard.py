@@ -62,10 +62,10 @@ def device():
 @app.route('/configuring/controller', methods=['POST'])
 def configuring_api():
     raw = request.form.to_dict(flat=True)
-    data = {k.encode('utf8'): v.encode('utf8') for k, v in raw.items()}
-    res = dict((k, v) for k, v in data.iteritems() if v)
-    print (res)
-    print (type(res))
+    res = {k.encode('utf8'): v.encode('utf8') for k, v in raw.items()}
+    data = dict((k, v) for k, v in res.iteritems() if v)
+    # Priority, Permanent, is not defined in form
+    
     json = {
         "priority": 40000,
         "isPermanent": True,
@@ -166,6 +166,55 @@ def configuring_api():
             ]
         }
     }
+
+    #Device ID
+    # jika key deviceid tidak ditemukan didalam dict data. hapus key didalam json files
+    try:
+        data['deviceid']
+    except KeyError:
+        del json["deviceId"]
+    else:
+        json['deviceId']=data['deviceid']
+
+    #Selector In Port
+    try:
+        data['selector.criteria.type.in_port']
+    except KeyError:
+        list = next((index for (index, d) in enumerate(json['selector']['criteria']) if d["type"] == "IN_PORT"), None)
+        del json['selector']['criteria'][list]
+    else:
+        list = next((index for (index, d) in enumerate(json['selector']['criteria']) if d["type"] == "IN_PORT"), None)
+        json['selector']['criteria'][list]['port']=data['selector.criteria.type.in_port.value']
+
+    #Selector eth src
+    try:
+        data['selector.criteria.type.eth_src']
+    except KeyError:
+        list = next((index for (index, d) in enumerate(json['selector']['criteria']) if d["type"] == "ETH_SRC"), None)
+        del json['selector']['criteria'][list]
+    else:
+        list = next((index for (index, d) in enumerate(json['selector']['criteria']) if d["type"] == "ETH_SRC"), None)
+        json['selector']['criteria'][list]['mac']=data['selector.criteria.type.eth_src.value']
+
+    #Selector eth dst
+    try:
+        data['selector.criteria.type.eth_dst']
+    except KeyError:
+        list = next((index for (index, d) in enumerate(json['selector']['criteria']) if d["type"] == "ETH_DST"), None)
+        del json['selector']['criteria'][list]
+    else:
+        list = next((index for (index, d) in enumerate(json['selector']['criteria']) if d["type"] == "ETH_DST"), None)
+        json['selector']['criteria'][list]['mac']=data['selector.criteria.type.eth_dst.value']
+
+    #Selector Eth Type
+    try:
+        data['selector.criteria.type.eth_type']
+    except KeyError:
+        list = next((index for (index, d) in enumerate(json['selector']['criteria']) if d["type"] == "ETH_TYPE"), None)
+        del json['selector']['criteria'][list]
+    else:
+        list = next((index for (index, d) in enumerate(json['selector']['criteria']) if d["type"] == "IN_PORT"), None)
+        json['selector']['criteria'][list]['ethType']=data['selector.criteria.type.eth_type.value']
 
     return ("success!")
 
