@@ -68,7 +68,7 @@ def configuring_api():
     print (type(res))
     json = {
         "priority": 40000,
-        "isPermanent": true,
+        "isPermanent": True,
         "deviceId": None,
         "treatment": {
             "instructions": [
