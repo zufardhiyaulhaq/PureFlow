@@ -9,6 +9,16 @@ from requests.auth import HTTPBasicAuth
 
 app = Flask(__name__)
 
+def search(dict, key, value):
+    for i, j in enumerate(dict):
+        try:
+            j[key]
+        except KeyError:
+            print ('error')
+        else:
+            if j[key] == value:
+                return i
+                break
 
 def get(append):
     url = 'http://127.0.0.1:8181/onos/v1'+append
@@ -301,50 +311,60 @@ def configuring_api():
     try:
         data['treatment.instructions.vlanid']
     except KeyError:
-        list = next((index for (index, d) in enumerate(json_data['treatment']['instructions']) if d["subtype"] == "VLAN_ID"), None)
+        list = search(json_data['treatment']['instructions'],key='subtype', value='VLAN_ID')
+        #list = next((index for (index, d) in enumerate(json_data['treatment']['instructions']) if d["subtype"] == "VLAN_ID"), None)
         del json_data['treatment']['instructions'][list]
     else:
-        list = next((index for (index, d) in enumerate(json_data['treatment']['instructions']) if d["subtype"] == "VLAN_ID"), None)
+        list = search(json_data['treatment']['instructions'],key='subtype', value='VLAN_ID')
+        #list = next((index for (index, d) in enumerate(json_data['treatment']['instructions']) if d["subtype"] == "VLAN_ID"), None)
         json_data['treatment']['instructions'][list]['vlanId']=data['treatment.instructions.vlanid.value']
 
     #instruction eth src
     try:
         data['treatment.instructions.eth_src']
     except KeyError:
-        list = next((index for (index, d) in enumerate(json_data['treatment']['instructions']) if d["subtype"] == "ETH_SRC"), None)
+        list = search(json_data['treatment']['instructions'],key='subtype', value='ETH_SRC')
+        #list = next((index for (index, d) in enumerate(json_data['treatment']['instructions']) if d["subtype"] == "ETH_SRC"), None)
         del json_data['treatment']['instructions'][list]
     else:
-        list = next((index for (index, d) in enumerate(json_data['treatment']['instructions']) if d["subtype"] == "ETH_SRC"), None)
+        list = search(json_data['treatment']['instructions'],key='subtype', value='ETH_SRC')
+        #list = next((index for (index, d) in enumerate(json_data['treatment']['instructions']) if d["subtype"] == "ETH_SRC"), None)
         json_data['treatment']['instructions'][list]['mac']=data['treatment.instructions.eth_src.value']
 
     #instruction eth dst
     try:
         data['treatment.instructions.eth_dst']
     except KeyError:
-        list = next((index for (index, d) in enumerate(json_data['treatment']['instructions']) if d["subtype"] == "ETH_DST"), None)
+        list = search(json_data['treatment']['instructions'],key='subtype', value='ETH_DST')
+        #list = next((index for (index, d) in enumerate(json_data['treatment']['instructions']) if d["subtype"] == "ETH_DST"), None)
         del json_data['treatment']['instructions'][list]
     else:
-        list = next((index for (index, d) in enumerate(json_data['treatment']['instructions']) if d["subtype"] == "ETH_DST"), None)
+        list = search(json_data['treatment']['instructions'],key='subtype', value='ETH_DST')
+        #list = next((index for (index, d) in enumerate(json_data['treatment']['instructions']) if d["subtype"] == "ETH_DST"), None)
         json_data['treatment']['instructions'][list]['mac']=data['treatment.instructions.eth_dst.value']
 
     #instruction ipv4 src
     try:
         data['treatment.instructions.ipv4_src']
     except KeyError:
-        list = next((index for (index, d) in enumerate(json_data['treatment']['instructions']) if d["subtype"] == "IPV4_SRC"), None)
+        list = search(json_data['treatment']['instructions'],key='subtype', value='IPV4_SRC')
+        #list = next((index for (index, d) in enumerate(json_data['treatment']['instructions']) if d["subtype"] == "IPV4_SRC"), None)
         del json_data['treatment']['instructions'][list]
     else:
-        list = next((index for (index, d) in enumerate(json_data['treatment']['instructions']) if d["subtype"] == "IPV4_SRC"), None)
+        list = search(json_data['treatment']['instructions'],key='subtype', value='IPV4_SRC')
+        #list = next((index for (index, d) in enumerate(json_data['treatment']['instructions']) if d["subtype"] == "IPV4_SRC"), None)
         json_data['treatment']['instructions'][list]['ip']=data['treatment.instructions.ipv4_src.value']
 
     #instruction ipv4 dst
     try:
         data['treatment.instructions.ipv4_dst']
     except KeyError:
-        list = next((index for (index, d) in enumerate(json_data['treatment']['instructions']) if d["subtype"] == "IPV4_DST"), None)
+        list = search(json_data['treatment']['instructions'],key='subtype', value='IPV4_DST')
+        #list = next((index for (index, d) in enumerate(json_data['treatment']['instructions']) if d["subtype"] == "IPV4_DST"), None)
         del json_data['treatment']['instructions'][list]
     else:
-        list = next((index for (index, d) in enumerate(json_data['treatment']['instructions']) if d["subtype"] == "IPV4_DST"), None)
+        list = search(json_data['treatment']['instructions'],key='subtype', value='IPV4_DST')
+        #list = next((index for (index, d) in enumerate(json_data['treatment']['instructions']) if d["subtype"] == "IPV4_DST"), None)
         json_data['treatment']['instructions'][list]['ip']=data['treatment.instructions.ipv4_dst.value']
 
     api_json = json.dumps(json_data)
