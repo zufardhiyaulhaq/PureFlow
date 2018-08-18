@@ -1,5 +1,4 @@
 #!/bin/bash
-
 echo "Update the repository"
 echo "============================================"
 sudo apt-get -y update
