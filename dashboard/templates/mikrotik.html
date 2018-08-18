@@ -64,7 +64,7 @@
         <div class="tab-content" id="pills-tabContent">
 
             <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
-                <form method="POST" action="/provisioning/api">
+                <form method="POST" action="/provisioning/api" id="mikrotik">
                     <input type="hidden" readonly name="device-type" value="mikrotik">
                     <div class="form-group">
                         <label for="controller">Controller IP Address</label>
@@ -90,12 +90,12 @@
                         <label for="device-ip">Device IP Address</label>
                         <input type="text" class="form-control" id="device-ip" placeholder="Enter IP Address" name="device-ip">
                     </div>
-                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <button type="submit" class="btn btn-primary" id="mikrotik-button">Submit</button>
                 </form>
             </div>
 
             <div class="tab-pane" id="pills-profile" role="tabpanel" aria-labelledby="profile-tab">
-                <form method="POST" action="/provisioning/api">
+                <form method="POST" action="/provisioning/api" id="mikrotik-port">
                     <input type="hidden" readonly name="device-type" value="mikrotik-port">
                     <div class="form-group">
                         <label for="bridge">OpenFlow name</label>
@@ -123,7 +123,7 @@
                         <input type="text" class="form-control" id="interface" placeholder="Enter Interface Name" name="interface">
                         <small id="openflowhelp" class="form-text text-muted">Enter interface name, e.g ether1.</small>
                     </div>
-                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <button type="submit" class="btn btn-primary" id="mikrotik-port-button">Submit</button>
                 </form>
             </div>
         </div>
@@ -132,10 +132,23 @@
 
 <script>
     $(function() {
-    $('button').click(function() {
+    $('#mikrotik-button').click(function() {
         $.ajax({
-            url: '/signUpUser',
-            data: $('form').serialize(),
+            url: '/provisioning/api',
+            data: $('#mikrotik').serialize(),
+            type: 'POST',
+            success: function(response) {
+                console.log(response);
+            },
+            error: function(error) {
+                console.log(error);
+            }
+        });
+    });
+    $('#mikrotik-port-button').click(function() {
+        $.ajax({
+            url: '/provisioning/api',
+            data: $('#mikrotik-port').serialize(),
             type: 'POST',
             success: function(response) {
                 console.log(response);

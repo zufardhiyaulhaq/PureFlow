@@ -48,14 +48,17 @@ ExecStart=/usr/bin/python /opt/PureFlow/dashboard/dashboard.py
 WantedBy=multi-user.target
 EOF'
 
+echo "fix locale python"
+echo "============================================"
+echo "export LC_ALL=C" >> ~/.bashrc
+source ~/.bashrc
+
 echo "Install python dashboard requirement"
 echo "============================================"
-export LC_ALL=C
 sudo pip install -r /opt/PureFlow/dashboard/requirement.txt
 
 echo "Running dashboard program"
 echo "============================================"
-export LC_ALL=C
 sudo systemctl enable dashboard
 sudo systemctl start dashboard
 
