@@ -46,8 +46,10 @@
             </div>
           </div>
         
-        <div class="card-deck" style="width: 30rem;">
+        <div class="card-deck">
             {% for device in data["devices"] %}
+            {% if device["available"] != False %}
+            <div class="col-md-3 mb-4">
             <div class="card">
                 <div class="card-header bg-transparent border-success">{{ device["id"] }}</div>
                 <div class="card-body">
@@ -56,12 +58,16 @@
                     <p class="card-text">{{ device["sw"] }}</p>
                     <p class="card-text">{{ device["annotations"]["protocol"] }}</p>
                 </div>
+                <div class="card-footer">
                 <form method="POST" action="/configuring/api">
                     <input type="hidden" readonly name="openflow" value={{ device["annotations"]["protocol"] }}>
                     <input type="hidden" readonly name="deviceid" value={{ device["id"] }}>
                     <button type="submit" class="btn btn-primary">Configure</button>
                 </form>
+                </div>
             </div>
+            </div>
+            {% endif %}
             {% endfor %}
         </div>
     </div>
