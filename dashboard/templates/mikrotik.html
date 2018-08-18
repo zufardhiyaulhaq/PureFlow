@@ -11,6 +11,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
         crossorigin="anonymous"></script>
     <script src="/static/bootstrap.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gasparesganga-jquery-loading-overlay@2.1.5/dist/loadingoverlay.min.js"></script>
 </head>
 
 <body>
@@ -133,29 +135,59 @@
     $(document).ready(function () {
         $('#mikrotik').submit(function (e) {
             e.preventDefault();
+            $.LoadingOverlay("show");
             $.ajax({
                 url: '/provisioning/api',
                 data: $('#mikrotik').serialize(),
                 type: 'POST',
                 success: function (response) {
                     console.log(response);
+                    $.LoadingOverlay("hide");
+                    swal({
+                        title: "Success!",
+                        text: "you success configure devices!",
+                        icon: "success",
+                        button: "Continue",
+                    });
                 },
                 error: function (error) {
                     console.log(error);
+                    $.LoadingOverlay("hide");
+                    swal({
+                        title: "Error!",
+                        text: "Check your configuration!",
+                        icon: "error",
+                        button: "Continue",
+                    });
                 }
             });
         });
-        
+
         $('#mikrotik-port').submit(function (e) {
             e.preventDefault();
+            $.LoadingOverlay("show");
             $.ajax({
                 url: '/provisioning/api',
                 data: $('#mikrotik-port').serialize(),
                 type: 'POST',
                 success: function (response) {
+                    $.LoadingOverlay("hide");
+                    swal({
+                        title: "Success!",
+                        text: "you success configure devices!",
+                        icon: "success",
+                        button: "Continue",
+                    });
                     console.log(response);
                 },
                 error: function (error) {
+                    $.LoadingOverlay("hide");
+                    swal({
+                        title: "Error!",
+                        text: "Check your configuration!",
+                        icon: "error",
+                        button: "Continue",
+                    });
                     console.log(error);
                 }
             });
