@@ -5,7 +5,7 @@ sudo apt-get -y update
 
 echo "Install mysql"
 echo "============================================"
-sudo apt-get -y install mysql-server
+sudo apt-get -y install mysql-server libmysqlclient-dev
 
 echo "Bootstraping mysql database"
 echo "============================================"
