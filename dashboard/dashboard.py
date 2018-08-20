@@ -9,9 +9,12 @@ from requests.auth import HTTPBasicAuth
 
 app = Flask(__name__)
 
+db_config_raw = json.loads(open("config.json","r").read())
+db_config = {k.encode('utf8'): v.encode('utf8') for k, v in db_config_raw.items()}
+
 # get user table
 def db_user():
-    db = MySQLdb.connect("localhost","pureflowadmin","pureflowpassword","pureflow")
+    db = MySQLdb.connect(host=db_config["ip"],user=db_config["username"],passwd=db_config["password"],db=db_config["database"])
     cursor = db.cursor() 
     
     sql = "select * from user"
@@ -20,9 +23,9 @@ def db_user():
 
     return results
 
-# get user table
+# get controller table
 def db_controller():
-    db = MySQLdb.connect("localhost","pureflowadmin","pureflowpassword","pureflow")
+    db = MySQLdb.connect(host=db_config["ip"],user=db_config["username"],passwd=db_config["password"],db=db_config["database"])    
     cursor = db.cursor() 
     
     sql = "select * from controller"
@@ -31,9 +34,9 @@ def db_controller():
 
     return results
 
-# get user table
+# get site_settings table
 def db_site():
-    db = MySQLdb.connect("localhost","pureflowadmin","pureflowpassword","pureflow")
+    db = MySQLdb.connect(host=db_config["ip"],user=db_config["username"],passwd=db_config["password"],db=db_config["database"])    
     cursor = db.cursor() 
     
     sql = "select * from site_settings"
@@ -92,7 +95,7 @@ def logout():
 @app.route('/login', methods=['POST'])
 def admin_login():
     # masukan data kedalam fungsi db_user_check
-    if login_check(request.form['password'],request.form['username']):
+    if login_check(request.form['username'],request.form['password']):
         session['logged_in'] = True
     else:
         flash('wrong password!')
@@ -469,7 +472,7 @@ def mikrotik():
 
 # api provisioning
 @app.route('/provisioning/api', methods=['POST'])
-def openvswitch_api():
+def provisioning_api():
     if not session.get('logged_in'):
         return render_template('login.html')
     else:
@@ -498,18 +501,55 @@ def openvswitch_api():
             return "success!"
 
 # Admin Menu
-@app.route('/admin', methods=['POST', 'GET'])
+@app.route('/admin', methods=['GET'])
 def admin():
     if not session.get('logged_in'):
         return render_template('login.html')
     else:
         user = db_user()
         controller = db_controller()
-        data = {"user":{"username":user[0][1],"password":user[0][2],"fullname":user[0][3]},"controller":{"username":controller[0][1],"password":controller[0][2],"ip":controller[0][3]}}
+        site = db_site()
+        data = {
+                    "user": {
+                        "username": user[0][1],
+                        "password": user[0][2],
+                        "fullname": user[0][3]
+                    },
+                    "controller": {
+                        "username": controller[0][1],
+                        "password": controller[0][2],
+                        "ip": controller[0][3]
+                    },
+                    "site": {
+                        "port": site[0][1]
+                    }
+                }
         
         return render_template('admin.html', data=data)
+
+# Admin API
+@app.route('/admin/api', methods=['POST'])
+def _api():
+    if not session.get('logged_in'):
+        return render_template('login.html')
+    else:
+        raw = request.form.to_dict(flat=True)
+        data = {k.encode('utf8'): v.encode('utf8') for k, v in raw.items()}
+
+        if data["method"] == "profile":
+                db = MySQLdb.connect(host=db_config["ip"],user=db_config["username"],passwd=db_config["password"],db=db_config["database"])
+                cursor = db.cursor()
+                cursor.execute("""
+                UPDATE user
+                SET username='%s', fullname='%s'
+                WHERE id=1;
+                """%(data["username"],data["fullname"]))
+                db.commit()
+                db.close()
+
+                return "success!"
 
 if __name__ == '__main__':
     app.secret_key = os.urandom(12)
     port = db_site()
-    app.run(host="0.0.0.0", port=port[0][0], debug=True)
+    app.run(host="0.0.0.0", port=port[0][1], debug=True)

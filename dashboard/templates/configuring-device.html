@@ -7,11 +7,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB"
         crossorigin="anonymous">
-    <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
+        <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
         crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T"
         crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gasparesganga-jquery-loading-overlay@2.1.5/dist/loadingoverlay.min.js"></script>
 </head>
 
 <body>
@@ -48,6 +50,7 @@
                 </h1>
             </div>
         </div>
+
         {% if data["openflow"] == 'OF_10' %}
         <form method="POST" action="/configuring/controller" id="form">
             <input type="hidden" readonly name="deviceid" value={{ data[ "deviceid"] }}>
@@ -206,7 +209,165 @@
             <button type="submit" class="btn btn-primary">Submit</button>
         </form>
 
-        {% elif data["openflow"] == 'OF_13' %} {% endif %}
+        {% elif data["openflow"] == 'OF_13' %} 
+        <form method="POST" action="/configuring/controller" id="form">
+            <input type="hidden" readonly name="deviceid" value={{ data[ "deviceid"] }}>
+
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Packet Matching Field</h4>
+
+                    <div class="form-group">
+                        <label for="in_port">In Port</label>
+                        <input type="text" class="form-control" id="selector_criteria_type_in_port_value" placeholder="In Port Value" name="selector.criteria.type.in_port.value">
+                        <small class="form-text text-muted">empty if not in use</small>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="vlan_vid">VLAN ID</label>
+                        <input type="text" class="form-control" id="selector_criteria_type_vlan_vid_value" placeholder="In Port Value" name="selector.criteria.type.vlan_vid.value">
+                        <small class="form-text text-muted">empty if not in use</small>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="eth_src">Source MAC Address</label>
+                        <input type="text" class="form-control" id="selector_criteria_type_eth_src_value" placeholder="Source MAC Address" name="selector.criteria.type.eth_src.value">
+                        <small class="form-text text-muted">empty if not in use</small>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="eth_dst">Destination MAC Address</label>
+                        <input type="text" class="form-control" id="selector_criteria_type_eth_dst_value" placeholder="Destination MAC Address" name="selector.criteria.type.eth_dst.value">
+                        <small class="form-text text-muted">empty if not in use</small>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="eth_type">Ethernet Type</label>
+                        <select class="custom-select" id="selector_criteria_type_eth_type_value" name="selector.criteria.type.eth_type.value">
+                            <option value="">None</option>
+                            <option value="0x0800">IPv4</option>
+                        </select>
+                        <small class="form-text text-muted">Use this for layer 3 modification</small>
+                        <small class="form-text text-muted">https://en.wikipedia.org/wiki/EtherType</small>
+                    </div>
+
+                    <div class="card ip" id="ipv4">
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label for="ipv4_src">Source IPv4 Address</label>
+                                <input type="text" class="form-control" id="selector_criteria_type_ipv4_src_value" placeholder="Source IPv4 Address" name="selector.criteria.type.ipv4_src.value">
+                                <small class="form-text text-muted">empty if not in use</small>
+                            </div>
+                            <div class="form-group">
+                                <label for="ipv4_dst">Destination IPv4 Address</label>
+                                <input type="text" class="form-control" id="selector_criteria_type_ipv4_dst_value" placeholder="Destination IPv4 Address"
+                                    name="selector.criteria.type.ipv4_dst.value">
+                                <small class="form-text text-muted">empty if not in use</small>
+                            </div>
+                            <small class="form-text text-muted">Use IPv4 if you choose IPv4 in IP Protocol</small>
+
+
+                            <br/>
+                            <div class="form-group">
+                                <label for="ip_proto">IP Protocol</label>
+                                <select class="custom-select" id="selector_criteria_type_ip_proto_value" name="selector.criteria.type.ip_proto.value">
+                                    <option value="">None</option>
+                                    <option value="6">TCP</option>
+                                    <option value="17">UDP</option>
+                                </select>
+                                <small class="form-text text-muted">Use this for layer 4 modification</small>
+                                <small class="form-text text-muted">https://en.wikipedia.org/wiki/List_of_IP_protocol_numbers</small>
+                            </div>
+
+                            <div class="card protocol" id="tcp">
+                                <div class="card-body">
+                                    <div class="form-group">
+                                        <label for="tcp_src">Source TCP</label>
+                                        <input type="text" class="form-control" id="selector_criteria_type_tcp_src_value" placeholder="Source TCP" name="selector.criteria.type.tcp_src.value">
+                                        <small class="form-text text-muted">empty if not in use</small>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="tcp_dst">Destination TCP</label>
+                                        <input type="text" class="form-control" id="selector_criteria_type_tcp_dst_value" placeholder="Destination TCP" name="selector.criteria.type.tcp_dst.value">
+                                        <small class="form-text text-muted">empty if not in use</small>
+                                    </div>
+                                    <small class="form-text text-muted">Use TCP if you choose TCP in IP Protocol</small>
+                                </div>
+                            </div>
+
+                            <div class="card protocol" id="udp">
+                                <div class="card-body">
+                                    <div class="form-group">
+                                        <label for="udp_src">Source UDP</label>
+                                        <input type="text" class="form-control" id="selector_criteria_type_udp_src_value" placeholder="Source UDP" name="selector.criteria.type.udp_src.value">
+                                        <small class="form-text text-muted">empty if not in use</small>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="udp_dst">Destination UDP</label>
+                                        <input type="text" class="form-control" id="selector_criteria_type_udp_dst_value" placeholder="Destination UDP" name="selector.criteria.type.udp_dst.value">
+                                        <small class="form-text text-muted">empty if not in use</small>
+                                    </div>
+                                    <small class="form-text text-muted">Use TCP if you choose TCP in IP Protocol</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Action</h4>
+
+                    <div class="card">
+                        <div class="card-body">
+
+                            <div class="form-group">
+                                <label for="treatment.instructions.output">Change Output Port</label>
+                                <input type="text" class="form-control" id="treatment_instructions_output_value" placeholder="Output Port" name="treatment.instructions.output.value">
+                                <small class="form-text text-muted">empty if not in use</small>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="treatment.instructions.vlanid">Change VLAN ID</label>
+                                <input type="text" class="form-control" id="treatment_instructions_vlanid_value" placeholder="VLAN ID" name="treatment.instructions.vlanid.value">
+                                <small class="form-text text-muted">empty if not in use</small>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="treatment.instructions.eth_src">Change Source MAC</label>
+                                <input type="text" class="form-control" id="treatment_instructions_eth_src_value" placeholder="Source MAC Address" name="treatment.instructions.eth_src.value">
+                                <small class="form-text text-muted">empty if not in use</small>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="treatment.instructions.eth_dst">Change Destination MAC</label>
+                                <input type="text" class="form-control" id="treatment_instructions_eth_dst_value" placeholder="Destination MAC Address" name="treatment.instructions.eth_dst.value">
+                                <small class="form-text text-muted">empty if not in use</small>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="treatment.instructions.ipv4_src">Change Source IP</label>
+                                <input type="text" class="form-control" id="treatment_instructions_ipv4_src_value" placeholder="Source IP Address" name="treatment.instructions.ipv4_src.value">
+                                <small class="form-text text-muted">empty if not in use</small>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="treatment.instructions.ipv4_dst">Change Destination IP</label>
+                                <input type="text" class="form-control" id="treatment_instructions_ipv4_dst_value" placeholder="Destination IP Address" name="treatment.instructions.ipv4_dst.value">
+                                <small class="form-text text-muted">empty if not in use</small>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+
+        {% endif %}
     </div>
 
     {% if data["openflow"] == 'OF_10' %}
@@ -529,5 +690,39 @@
     {% endif %}
 
 </body>
+
+<script>
+    $(document).ready(function () {
+        $('#form').submit(function (e) {
+            e.preventDefault();
+            $.LoadingOverlay("show");
+            $.ajax({
+                url: '/configuring/controller',
+                data: $('#form').serialize(),
+                type: 'POST',
+                success: function (response) {
+                    console.log(response);
+                    $.LoadingOverlay("hide");
+                    swal({
+                        title: "Success!",
+                        text: "you success configure devices!",
+                        icon: "success",
+                        button: "Continue",
+                    });
+                },
+                error: function (error) {
+                    console.log(error);
+                    $.LoadingOverlay("hide");
+                    swal({
+                        title: "Error!",
+                        text: "Check your configuration!",
+                        icon: "error",
+                        button: "Continue",
+                    });
+                }
+            });
+        });
+    })
+</script>
 
 </html>
