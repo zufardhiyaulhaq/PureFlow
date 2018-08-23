@@ -72,9 +72,10 @@ def search(dict, key, value):
 
 # get data from onos
 def get(append):
-    url = 'http://127.0.0.1:8181/onos/v1'+append
+    raw = db_controller()
+    url = 'http://'+raw[0][3]+':8181/onos/v1'+append
     data = requests.get(url, auth=HTTPBasicAuth(
-        'onos', 'rocks')).text.decode('utf-8')
+        raw[0][1], raw[0][2])).text.decode('utf-8')
     return json.loads(data)
 
 # main menu
@@ -440,8 +441,9 @@ def configuring_api():
         api_json = json.dumps(json_data)
 
         # push json kedalam controller
-        url = 'http://127.0.0.1:8181/onos/v1/flows/'+data['deviceid']
-        requests.post(url=url,  auth=("onos", "rocks"), data=api_json, headers={"content-type":"application/json"})
+        raw = db_controller()
+        url = 'http://'+raw[0][3]+':8181/onos/v1/flows/'+data['deviceid']
+        requests.post(url=url,  auth=(raw[0][1], raw[0][2]), data=api_json, headers={"content-type":"application/json"})
 
         # return success
         return ("success!")
@@ -537,17 +539,57 @@ def _api():
         data = {k.encode('utf8'): v.encode('utf8') for k, v in raw.items()}
 
         if data["method"] == "profile":
-                db = MySQLdb.connect(host=db_config["ip"],user=db_config["username"],passwd=db_config["password"],db=db_config["database"])
-                cursor = db.cursor()
-                cursor.execute("""
-                UPDATE user
-                SET username='%s', fullname='%s'
-                WHERE id=1;
-                """%(data["username"],data["fullname"]))
-                db.commit()
-                db.close()
+            db = MySQLdb.connect(host=db_config["ip"],user=db_config["username"],passwd=db_config["password"],db=db_config["database"])
+            cursor = db.cursor()
+            cursor.execute("""
+            UPDATE user
+            SET username='%s', fullname='%s'
+            WHERE id=1;
+            """%(data["username"],data["fullname"]))
+            db.commit()
+            db.close()
 
-                return "success!"
+            return "success!"
+
+        elif data["method"] == "password":
+            db = MySQLdb.connect(host=db_config["ip"],user=db_config["username"],passwd=db_config["password"],db=db_config["database"])
+            cursor = db.cursor()
+            cursor.execute("""
+            UPDATE user
+            SET password='%s'
+            WHERE id=1;
+            """%(data["newpass"]))
+            db.commit()
+            db.close()
+
+            return "success!"
+        
+        if data["method"] == "controller":
+            db = MySQLdb.connect(host=db_config["ip"],user=db_config["username"],passwd=db_config["password"],db=db_config["database"])
+            cursor = db.cursor()
+            cursor.execute("""
+            UPDATE controller
+            SET ipaddress='%s', username='%s', password='%s'
+            WHERE id=1;
+            """%(data["ipaddress"],data["username"],data["password"]))
+            db.commit()
+            db.close()
+
+            return "success!"
+        
+        if data["method"] == "site":
+            db = MySQLdb.connect(host=db_config["ip"],user=db_config["username"],passwd=db_config["password"],db=db_config["database"])
+            cursor = db.cursor()
+            cursor.execute("""
+            UPDATE site_settings
+            SET port=%s
+            WHERE id=1;
+            """%(data["port"]))
+            db.commit()
+            db.close()
+
+            return "success!"
+
 
 if __name__ == '__main__':
     app.secret_key = os.urandom(12)

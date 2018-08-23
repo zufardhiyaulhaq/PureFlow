@@ -7,12 +7,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB"
         crossorigin="anonymous">
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-        crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
         crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T"
-        crossorigin="anonymous"></script>
+    <script src="/static/bootstrap.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gasparesganga-jquery-loading-overlay@2.1.5/dist/loadingoverlay.min.js"></script>
 </head>
 
 <body>
@@ -77,7 +77,7 @@
                 </nav>
                 <div class="tab-content" id="nav-tabContent">
                     <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
-                        <form action="/admin/api" method="POST">
+                        <form action="/admin/api" method="POST" id="profile">
                             <input type="hidden" readonly name="method" value="profile">
                             <div class="form-group row">
                                 <label for="inputEmail3" class="col-sm-2 col-form-label">Fullname</label>
@@ -95,37 +95,183 @@
                         </form>
                     </div>
                     <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
-
+                        <form action="/admin/api" method="POST" id="password">
+                            <input type="hidden" readonly name="method" value="password">
+                            <div class="form-group row">
+                                <label for="inputPassword3" class="col-sm-2 col-form-label">New Password</label>
+                                <div class="col-sm-10">
+                                    <input type="password" class="form-control" name="newpass">
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-sm btn-primary">Submit</button>
+                        </form>
                     </div>
                 </div>
             </div>
 
             <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="profile-tab">
-                <table class="table">
-                    <tbody>
-                        <tr>
-                            <th scope="row">IP Address</th>
-                            <td>{{ data["controller"]["ip"] }}</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">Username</th>
-                            <td>{{ data["controller"]["username"] }}</td>
-                        </tr>
-                    </tbody>
-                </table>
+                <form action="/admin/api" method="POST" id="controller">
+                    <input type="hidden" readonly name="method" value="controller">
+                    <div class="form-group row">
+                        <label for="inputEmail3" class="col-sm-2 col-form-label">IP Address</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="ipaddress" value="{{ data["controller"]["ip"] }}">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="inputPassword3" class="col-sm-2 col-form-label">Username</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="username" value="{{ data["controller"]["username"] }}">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="inputPassword3" class="col-sm-2 col-form-label">Password</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="password" value="{{ data["controller"]["password"] }}">
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-sm btn-primary">Submit</button>
+                </form>
             </div>
             <div class="tab-pane fade" id="pills-site" role="tabpanel" aria-labelledby="site-tab">
-                <table class="table">
-                    <tbody>
-                        <tr>
-                            <th scope="row">Site Port</th>
-                            <td>{{ data["site"]["port"] }}</td>
-                        </tr>
-                    </tbody>
-                </table>
+                    <form action="/admin/api" method="POST" id="site">
+                        <input type="hidden" readonly name="method" value="site">
+                        <div class="form-group row">
+                            <label for="inputEmail3" class="col-sm-2 col-form-label">Port</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" name="port" value="{{ data["site"]["port"] }}">
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-sm btn-primary">Submit</button>
+                    </form>
             </div>
         </div>
     </div>
 </body>
+
+<script>
+    $(document).ready(function () {
+        $('#profile').submit(function (e) {
+            e.preventDefault();
+            $.LoadingOverlay("show");
+            $.ajax({
+                url: '/admin/api',
+                data: $('#profile').serialize(),
+                type: 'POST',
+                success: function (response) {
+                    console.log(response);
+                    $.LoadingOverlay("hide");
+                    swal({
+                        title: "Success!",
+                        text: "you success configure devices!",
+                        icon: "success",
+                        button: "Continue",
+                    });
+                },
+                error: function (error) {
+                    console.log(error);
+                    $.LoadingOverlay("hide");
+                    swal({
+                        title: "Error!",
+                        text: "Check your configuration!",
+                        icon: "error",
+                        button: "Continue",
+                    });
+                }
+            });
+        });
+
+        $('#password').submit(function (e) {
+            e.preventDefault();
+            $.LoadingOverlay("show");
+            $.ajax({
+                url: '/admin/api',
+                data: $('#password').serialize(),
+                type: 'POST',
+                success: function (response) {
+                    $.LoadingOverlay("hide");
+                    swal({
+                        title: "Success!",
+                        text: "you success configure devices!",
+                        icon: "success",
+                        button: "Continue",
+                    });
+                    console.log(response);
+                },
+                error: function (error) {
+                    $.LoadingOverlay("hide");
+                    swal({
+                        title: "Error!",
+                        text: "Check your configuration!",
+                        icon: "error",
+                        button: "Continue",
+                    });
+                    console.log(error);
+                }
+            });
+        });
+
+        $('#controller').submit(function (e) {
+            e.preventDefault();
+            $.LoadingOverlay("show");
+            $.ajax({
+                url: '/admin/api',
+                data: $('#controller').serialize(),
+                type: 'POST',
+                success: function (response) {
+                    $.LoadingOverlay("hide");
+                    swal({
+                        title: "Success!",
+                        text: "you success configure devices!",
+                        icon: "success",
+                        button: "Continue",
+                    });
+                    console.log(response);
+                },
+                error: function (error) {
+                    $.LoadingOverlay("hide");
+                    swal({
+                        title: "Error!",
+                        text: "Check your configuration!",
+                        icon: "error",
+                        button: "Continue",
+                    });
+                    console.log(error);
+                }
+            });
+        });
+
+        $('#site').submit(function (e) {
+            e.preventDefault();
+            $.LoadingOverlay("show");
+            $.ajax({
+                url: '/admin/api',
+                data: $('#site').serialize(),
+                type: 'POST',
+                success: function (response) {
+                    $.LoadingOverlay("hide");
+                    swal({
+                        title: "Success!",
+                        text: "you success configure devices!",
+                        icon: "success",
+                        button: "Continue",
+                    });
+                    console.log(response);
+                },
+                error: function (error) {
+                    $.LoadingOverlay("hide");
+                    swal({
+                        title: "Error!",
+                        text: "Check your configuration!",
+                        icon: "error",
+                        button: "Continue",
+                    });
+                    console.log(error);
+                }
+            });
+        });
+
+    })
+</script>
 
 </html>

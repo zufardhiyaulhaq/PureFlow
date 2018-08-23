@@ -665,28 +665,295 @@
     {% elif data["openflow"] == 'OF_13' %}
     <script type="text/javascript">
         $(document).ready(function () {
-            // default state, show aa only
-            $(".ip").hide()
+            $("#selector_criteria_type_in_port_value").change(function () {
+                if ($("#selector_criteria_type_in_port_value").val() == "") {
+                    $("#selector_criteria_type_in_port").remove();
+                } else {
+                    $("#selector_criteria_type_in_port").remove();
+                    $("#form").append(
+                        '<input type="hidden" id="selector_criteria_type_in_port" readonly name="selector.criteria.type.in_port" value="IN_PORT">'
+                    )
+                }
+            })
 
-            $("#ip").change(function () {
+            $("#selector_criteria_type_eth_src_value").change(function () {
+                if ($("#selector_criteria_type_eth_src_value").val() == "") {
+                    $("#selector_criteria_type_eth_src").remove();
+                } else {
+                    $("#selector_criteria_type_eth_src").remove();
+                    $("#form").append(
+                        '<input type="hidden" id="selector_criteria_type_eth_src" readonly name="selector.criteria.type.eth_src" value="ETH_SRC">'
+                    )
+                }
+            })
+
+            $("#selector_criteria_type_eth_dst_value").change(function () {
+                if ($("#selector_criteria_type_eth_dst_value").val() == "") {
+                    $("#selector_criteria_type_eth_dst").remove();
+                } else {
+                    $("#selector_criteria_type_eth_dst").remove();
+                    $("#form").append(
+                        '<input type="hidden" id="selector_criteria_type_eth_dst" readonly name="selector.criteria.type.eth_dst" value="ETH_DST">'
+                    )
+                }
+            })
+
+            $("#selector_criteria_type_vlan_vid_value").change(function () {
+                if ($("#selector_criteria_type_vlan_vid_value").val() == "") {
+                    $("#selector_criteria_type_vlan_vid").remove();
+                } else {
+                    $("#selector_criteria_type_vlan_vid").remove();
+                    $("#form").append(
+                        '<input type="hidden" id="selector_criteria_type_vlan_vid" readonly name="selector.criteria.type.vlan_vid" value="VLAN_VID">'
+                    )
+                }
+            })
+
+            $("#selector_criteria_type_eth_type_value").change(function () {
+                if ($("#selector_criteria_type_eth_type_value").val() == "") {
+                    $("#selector_criteria_type_eth_type").remove();
+                    $("#selector_criteria_type_ipv4_dst").remove();
+                    $("#selector_criteria_type_ipv4_src").remove();
+                    $("#selector_criteria_type_ip_proto").remove();
+                    $("#selector_criteria_type_udp_src").remove();
+                    $("#selector_criteria_type_tcp_src").remove();
+                    $("#selector_criteria_type_udp_dst").remove();
+                    $("#selector_criteria_type_tcp_dst").remove();
+                } else {
+                    $("#selector_criteria_type_eth_type").remove();
+                    $("#selector_criteria_type_ipv4_dst").remove();
+                    $("#selector_criteria_type_ipv4_src").remove();
+                    $("#selector_criteria_type_ip_proto").remove();
+                    $("#selector_criteria_type_udp_src").remove();
+                    $("#selector_criteria_type_tcp_src").remove();
+                    $("#selector_criteria_type_udp_dst").remove();
+                    $("#selector_criteria_type_tcp_dst").remove();
+                    $("#form").append(
+                        '<input type="hidden" id="selector_criteria_type_eth_type" readonly name="selector.criteria.type.eth_type" value="ETH_TYPE">'
+                    )
+                }
+            })
+
+            $("#selector_criteria_type_ipv4_src_value").change(function () {
+                if ($("#selector_criteria_type_ipv4_src_value").val() == "") {
+                    $("#selector_criteria_type_ipv4_src").remove();
+                } else {
+                    $("#selector_criteria_type_ipv4_src").remove();
+                    $("#form").append(
+                        '<input type="hidden" id="selector_criteria_type_ipv4_src" readonly name="selector.criteria.type.ipv4_src" value="IPV4_SRC">'
+                    )
+                }
+            })
+
+            $("#selector_criteria_type_ipv4_dst_value").change(function () {
+                if ($("#selector_criteria_type_ipv4_dst_value").val() == "") {
+                    $("#selector_criteria_type_ipv4_dst").remove();
+                } else {
+                    $("#selector_criteria_type_ipv4_dst").remove();
+                    $("#form").append(
+                        '<input type="hidden" id="selector_criteria_type_ipv4_dst" readonly name="selector.criteria.type.ipv4_dst" value="IPV4_DST">'
+                    )
+                }
+            })
+
+            $("#selector_criteria_type_ip_proto_value").change(function () {
+                if ($("#selector_criteria_type_ip_proto_value").val() == "") {
+                    $("#selector_criteria_type_ip_proto").remove();
+                    $("#selector_criteria_type_udp_src").remove();
+                    $("#selector_criteria_type_tcp_src").remove();
+                    $("#selector_criteria_type_udp_dst").remove();
+                    $("#selector_criteria_type_tcp_dst").remove();
+                } else {
+                    $("#selector_criteria_type_ip_proto").remove();
+                    $("#selector_criteria_type_udp_src").remove();
+                    $("#selector_criteria_type_tcp_src").remove();
+                    $("#selector_criteria_type_udp_dst").remove();
+                    $("#selector_criteria_type_tcp_dst").remove();
+                    $("#form").append(
+                        '<input type="hidden" id="selector_criteria_type_ip_proto" readonly name="selector.criteria.type.ip_proto" value="IP_PROTO">'
+                    )
+                }
+            })
+
+            $("#selector_criteria_type_udp_src_value").change(function () {
+                if ($("#selector_criteria_type_udp_src_value").val() == "") {
+                    $("#selector_criteria_type_udp_src").remove();
+                } else {
+                    $("#selector_criteria_type_udp_src").remove();
+                    $("#form").append(
+                        '<input type="hidden" id="selector_criteria_type_udp_src" readonly name="selector.criteria.type.udp_src" value="UDP_SRC">'
+                    )
+                }
+            })
+
+            $("#selector_criteria_type_udp_dst_value").change(function () {
+                if ($("#selector_criteria_type_udp_dst_value").val() == "") {
+                    $("#selector_criteria_type_udp_dst").remove();
+                } else {
+                    $("#selector_criteria_type_udp_dst").remove();
+                    $("#form").append(
+                        '<input type="hidden" id="selector_criteria_type_udp_dst" readonly name="selector.criteria.type.udp_dst" value="UDP_DST">'
+                    )
+                }
+            })
+
+            $("#selector_criteria_type_tcp_src_value").change(function () {
+                if ($("#selector_criteria_type_tcp_src_value").val() == "") {
+                    $("#selector_criteria_type_tcp_src").remove();
+                } else {
+                    $("#selector_criteria_type_tcp_src").remove();
+                    $("#form").append(
+                        '<input type="hidden" id="selector_criteria_type_tcp_src" readonly name="selector.criteria.type.tcp_src" value="TCP_SRC">'
+                    )
+                }
+            })
+
+            $("#selector_criteria_type_tcp_dst_value").change(function () {
+                if ($("#selector_criteria_type_tcp_dst_value").val() == "") {
+                    $("#selector_criteria_type_tcp_dst").remove();
+                } else {
+                    $("#selector_criteria_type_tcp_dst").remove();
+                    $("#form").append(
+                        '<input type="hidden" id="selector_criteria_type_tcp_dst" readonly name="selector.criteria.type.tcp_dst" value="TCP_DST">'
+                    )
+                }
+            })
+
+            // Action Selector
+            $("#treatment_instructions_output_value").change(function () {
+                if ($("#treatment_instructions_output_value").val() == "") {
+                    $("#treatment_instructions_output").remove();
+                } else {
+                    $("#treatment_instructions_output").remove();
+                    $("#form").append(
+                        '<input type="hidden" id="treatment_instructions_output" readonly name="treatment.instructions.output" value="OUTPUT">'
+                    )
+                }
+            })
+
+            $("#treatment_instructions_vlanid_value").change(function () {
+                if ($("#treatment_instructions_vlanid_value").val() == "") {
+                    $("#treatment_instructions_vlanid").remove();
+                    $("#treatment_instructions_vlanid_subtype").remove();
+                } else {
+                    $("#treatment_instructions_vlanid").remove();
+                    $("#treatment_instructions_vlanid_subtype").remove();
+                    $("#form").append(
+                        '<input type="hidden" id="treatment_instructions_vlanid" readonly name="treatment.instructions.vlanid" value="L2MODIFICATION">'
+                    )
+                    $("#form").append(
+                        '<input type="hidden" id="treatment_instructions_vlanid_subtype" readonly name="treatment.instructions.vlanid.subtype" value="VLAN_ID">'
+                    )
+                }
+            })
+
+            $("#treatment_instructions_eth_src_value").change(function () {
+                if ($("#treatment_instructions_eth_src_value").val() == "") {
+                    $("#treatment_instructions_eth_src").remove();
+                    $("#treatment_instructions_eth_src_subtype").remove();
+                } else {
+                    $("#treatment_instructions_eth_src").remove();
+                    $("#treatment_instructions_eth_src_subtype").remove();
+                    $("#form").append(
+                        '<input type="hidden" id="treatment_instructions_eth_src" readonly name="treatment.instructions.eth_src" value="L2MODIFICATION">'
+                    )
+                    $("#form").append(
+                        '<input type="hidden" id="treatment_instructions_eth_src_subtype" readonly name="treatment.instructions.eth_src.subtype" value="ETH_SRC">'
+                    )
+                }
+            })
+
+            $("#treatment_instructions_eth_dst_value").change(function () {
+                if ($("#treatment_instructions_eth_dst_value").val() == "") {
+                    $("#treatment_instructions_eth_dst").remove();
+                    $("#treatment_instructions_eth_dst_subtype").remove();
+                } else {
+                    $("#treatment_instructions_eth_dst").remove();
+                    $("#treatment_instructions_eth_dst_subtype").remove();
+                    $("#form").append(
+                        '<input type="hidden" id="treatment_instructions_eth_dst" readonly name="treatment.instructions.eth_dst" value="L2MODIFICATION">'
+                    )
+                    $("#form").append(
+                        '<input type="hidden" id="treatment_instructions_eth_dst_subtype" readonly name="treatment.instructions.eth_dst.subtype" value="ETH_DST">'
+                    )
+                }
+            })
+
+            $("#treatment_instructions_ipv4_src_value").change(function () {
+                if ($("#treatment_instructions_ipv4_src_value").val() == "") {
+                    $("#treatment_instructions_ipv4_src").remove();
+                    $("#treatment_instructions_ipv4_src_subtype").remove();
+                } else {
+                    $("#treatment_instructions_ipv4_src").remove();
+                    $("#treatment_instructions_ipv4_src_subtype").remove();
+                    $("#form").append(
+                        '<input type="hidden" id="treatment_instructions_ipv4_src" readonly name="treatment.instructions.ipv4_src" value="L3MODIFICATION">'
+                    )
+                    $("#form").append(
+                        '<input type="hidden" id="treatment_instructions_ipv4_src_subtype" readonly name="treatment.instructions.ipv4_src.subtype" value="IPV4_SRC">'
+                    )
+                }
+            })
+
+            $("#treatment_instructions_ipv4_dst_value").change(function () {
+                if ($("#treatment_instructions_ipv4_dst_value").val() == "") {
+                    $("#treatment_instructions_ipv4_dst").remove();
+                    $("#treatment_instructions_ipv4_dst_subtype").remove();
+                } else {
+                    $("#treatment_instructions_ipv4_dst").remove();
+                    $("#form").append(
+                        '<input type="hidden" id="treatment_instructions_ipv4_dst" readonly name="treatment.instructions.ipv4_dst" value="L3MODIFICATION">'
+                    )
+                    $("#form").append(
+                        '<input type="hidden" id="treatment_instructions_ipv4_dst_subtype" readonly name="treatment.instructions.ipv4_dst.subtype" value="IPV4_DST">'
+                    )
+                }
+            })
+
+            // Hidden for form fuction
+            $(".ip").hide()
+            $("#selector_criteria_type_eth_type_value").change(function () {
                 $(".ip").hide();
 
-                switch ($("#ip option:selected").val()) {
+                switch ($("#selector_criteria_type_eth_type_value option:selected").val()) {
                     case "0x0800":
                         {
                             $("#ipv4").show();
                             break;
                         }
-                    case "0x86DD":
+                    case "":
                         {
-                            $("#ipv6").show();
+                            $(".ip").hide();
+                            break;
+                        }
+                }
+            })
+
+            $(".protocol").hide()
+            $("#selector_criteria_type_ip_proto_value").change(function () {
+                $(".protocol").hide();
+
+                switch ($("#selector_criteria_type_ip_proto_value option:selected").val()) {
+                    case "6":
+                        {
+                            $("#tcp").show();
+                            break;
+                        }
+                    case "17":
+                        {
+                            $("#udp").show();
+                            break;
+                        }
+                    case "":
+                        {
+                            $(".protocol").hide();
                             break;
                         }
                 }
             })
         });
     </script>
-
+    
     {% endif %}
 
 </body>
