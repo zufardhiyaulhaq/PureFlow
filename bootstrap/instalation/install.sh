@@ -29,7 +29,7 @@ sudo apt-get install -y wget curl nano unzip git python-minimal python-pip
 
 echo "Clone Repository"
 echo "============================================"
-git clone -b 0.1 --single-branch https://github.com/zufardhiyaulhaq/PureFlow.git
+git clone https://github.com/zufardhiyaulhaq/PureFlow.git
 sudo mv PureFlow/ /opt/
 
 echo "Creating Daemon for Dashboard"
