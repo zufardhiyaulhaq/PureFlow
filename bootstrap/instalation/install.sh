@@ -50,6 +50,7 @@ EOF'
 
 echo "fix locale python"
 echo "============================================"
+export LC_ALL=C
 echo "export LC_ALL=C" >> ~/.bashrc
 source ~/.bashrc
 
