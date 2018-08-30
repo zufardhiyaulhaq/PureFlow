@@ -531,7 +531,7 @@ def admin():
 
 # Admin API
 @app.route('/admin/api', methods=['POST'])
-def _api():
+def admin_api():
     if not session.get('logged_in'):
         return render_template('login.html')
     else:
@@ -590,6 +590,19 @@ def _api():
 
             return "success!"
 
+@app.route('/flow', methods=['POST', 'GET'])
+def flow():
+    if not session.get('logged_in'):
+        return render_template('login.html')
+    else:
+        raw = request.form.to_dict(flat=True)
+        data = {k.encode('utf8'): v.encode('utf8') for k, v in raw.items()}
+        url = "/flows/"+data["deviceid"]
+        data = get(url)
+        return render_template('flow.html', data=data)
+
+    
+    return ("yes!")
 
 if __name__ == '__main__':
     app.secret_key = os.urandom(12)
