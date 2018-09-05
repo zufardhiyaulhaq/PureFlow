@@ -53,31 +53,30 @@
             {% for device in data["devices"] %}
             {% if device["available"] != False %}
             <div class="col-md-3 mb-4">
-            <div class="card">
-                <div class="card-header bg-transparent border-success">{{ device["id"] }}</div>
-                <div class="card-body">
-                    <h5 class="card-title">{{ device["annotations"]["managementAddress"] }}</h5>
-                    <p class="card-text">{{ device["mfr"] }}</p>
-                    <p class="card-text">{{ device["sw"] }}</p>
-                    <p class="card-text">{{ device["annotations"]["protocol"] }}</p>
+                <div class="card">
+                    <div class="card-header bg-transparent border-success">{{ device["id"] }}</div>
+                    <div class="card-body">
+                        <h5 class="card-title">{{ device["annotations"]["managementAddress"] }}</h5>
+                        <p class="card-text">{{ device["mfr"] }}</p>
+                        <p class="card-text">{{ device["sw"] }}</p>
+                        <p class="card-text">{{ device["annotations"]["protocol"] }}</p>
+                    </div>
                 </div>
-            </div>
                 <div class="card card-footer">
-                <form method="POST" class="form-group" action="/configuring/api">
-                    <input type="hidden" readonly name="openflow" value={{ device["annotations"]["protocol"] }}>
-                    <input type="hidden" readonly name="deviceid" value={{ device["id"] }}>
-                    <button type="submit" class="btn btn-primary">Configure Flow</button>
-                </form>
-                <form method="POST" class="form-group" action="/flow">
-                    <input type="hidden" readonly name="deviceid" value={{ device["id"] }}>
-                    <button type="submit" class="btn btn-primary">View Flow</button>
-                </form>
+                    <form method="POST" class="form-group" action="/configuring/api">
+                        <input type="hidden" readonly name="openflow" value={{ device["annotations"]["protocol"] }}>
+                        <input type="hidden" readonly name="deviceid" value={{ device["id"] }}>
+                        <button type="submit" class="btn btn-primary">Configure Flow</button>
+                    </form>
+                    <form method="POST" class="form-group" action="/flow">
+                        <input type="hidden" readonly name="deviceid" value={{ device["id"] }}>
+                        <button type="submit" class="btn btn-primary">View Flows</button>
+                    </form>
                 </div>
-            
-            </div>
             </div>
             {% endif %}
             {% endfor %}
+        </div>
         </div>
     </div>
 </body>
