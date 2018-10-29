@@ -32,10 +32,10 @@ PureFlow using Ansible and ONOS as main Backend tools. Ansible is use to provisi
 For provisioning devices, its use Ansible SSH based method to configure devices. For controlling the flow inside the devices, you can use web dashboard that communicate with ONOS controller.
 <span style="display:block;text-align:center">![provisioning](https://raw.githubusercontent.com/zufardhiyaulhaq/PureFlow/master/assets/provisioning.png)</span>
 
-## **Instalation**
-For instalation procedure, go to docs directory on this repository
+## **Installation**
+For installation procedure, go to docs directory on this repository
 
-## **Secrenshot**
+## **Screenshot**
 <span style="display:block;text-align:center">![screenshoot](https://raw.githubusercontent.com/zufardhiyaulhaq/PureFlow/master/assets/pureflow1.png)</span>
 <span style="display:block;text-align:center">![screenshoot](https://raw.githubusercontent.com/zufardhiyaulhaq/PureFlow/master/assets/pureflow2.png)</span>
 <span style="display:block;text-align:center">![screenshoot](https://raw.githubusercontent.com/zufardhiyaulhaq/PureFlow/master/assets/pureflow3.png)</span>
