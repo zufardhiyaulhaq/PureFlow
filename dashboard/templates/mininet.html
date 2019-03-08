@@ -1,0 +1,127 @@
+<!DOCTYPE <!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Mininet Provisioning</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB"
+        crossorigin="anonymous">
+        <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T"
+        crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gasparesganga-jquery-loading-overlay@2.1.5/dist/loadingoverlay.min.js"></script>
+</head>
+<body>
+    <div class="container-fluid">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <a class="navbar-brand" href="/">
+                <b>
+                    PureFlow
+                </b>
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/">Dashboard</a>
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link" href="/provisioning">Provisioning</a>
+                    </li>
+                    <li class="nav-item">
+                            <a class="nav-link" href="/configuring">Configuring Flow</a>
+                    </li>
+                </ul>
+            </div>
+            <a href="/logout" class="btn btn-primary ml-auto" role="button">Logout</a>
+        </nav>
+        <div class="jumbotron jumbotron-fluid">
+            <div class="container">
+                <h1 class="display-4">
+                    <b>Mininet Provisioning</b>
+                </h1>
+                <p class="lead">Connect mininet into Controller automatically</p>
+                <hr class="my-4">
+                <p>Your mininet devices need to configure ssh key. generate ssh key on PureFlow (root user) to your devices (user that can access mininet)!</p>
+            </div>
+        </div>
+        <form method="POST" action="/provisioning/api" id="mininet">
+            <input type="hidden" readonly name="device-type" value="mininet">
+            <div class="form-group">
+                <label for="controller">Controller IP Address</label>
+                <input type="text" class="form-control" id="controller" placeholder="Enter IP Address" name="controller">
+            </div>
+            <div class="form-group">
+                <label for="username">SSH Username</label>
+                <input type="text" class="form-control" id="username" placeholder="Enter Username" name="username">
+            </div>
+            <div class="form-group">
+                <label for="password">SSH Password</label>
+                <input type="text" class="form-control" id="password" placeholder="Enter Password" name="password">
+            </div>
+            <div class="form-group">
+                <label for="port">SSH Port</label>
+                <input type="text" class="form-control" id="port" placeholder="Enter Port" name="port">
+            </div>
+            <div class="form-group">
+                <label for="device-ip">Mininet IP Address</label>
+                <input type="text" class="form-control" id="device-ip" placeholder="Enter IP Address" name="device-ip">
+            </div>
+            <div class="form-group">
+                <label for="topology">IP Protocol</label>
+                <select class="custom-select" id="topology" name="topology">
+                    <option value="linier">Linier</option>
+                    <option value="single">Single</option>
+                    <option value="tree">Tree</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="topology-number">Topology Number</label>
+                <input type="text" class="form-control" id="topology-number" placeholder="Enter Number" name="topology-number">
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+</body>
+
+<script>
+    $(document).ready(function () {
+        $('#mininet').submit(function (e) {
+            e.preventDefault();
+            $.LoadingOverlay("show");
+            $.ajax({
+                url: '/provisioning/api',
+                data: $('#mininet').serialize(),
+                type: 'POST',
+                success: function (response) {
+                    console.log(response);
+                    $.LoadingOverlay("hide");
+                    swal({
+                        title: "Success!",
+                        text: "you success configure devices!",
+                        icon: "success",
+                        button: "Continue",
+                    });
+                },
+                error: function (error) {
+                    console.log(error);
+                    $.LoadingOverlay("hide");
+                    swal({
+                        title: "Error!",
+                        text: "Check your configuration!",
+                        icon: "error",
+                        button: "Continue",
+                    });
+                }
+            });
+        });
+    })
+</script>
+
+</html>

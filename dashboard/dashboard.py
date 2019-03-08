@@ -603,6 +603,14 @@ def mikrotik():
     else:
         return render_template('mikrotik.html')
 
+# provisioning mininet
+@app.route('/provisioning/mininet')
+def mikrotik():
+    if not session.get('logged_in'):
+        return render_template('login.html')
+    else:
+        return render_template('mininet.html')
+
 # api provisioning
 @app.route('/provisioning/api', methods=['POST'])
 def provisioning_api():
@@ -631,6 +639,13 @@ def provisioning_api():
             os.system("export ANSIBLE_HOST_KEY_CHECKING=False")
             os.system("ansible all -i %s, -m raw -a '/openflow port add switch=%s interface=%s disable=no;  quit' -u %s --extra-vars 'ansible_password=%s ansible_port=%s'" %
                       (data["device-ip"], data["bridge"], data["interface"], data["username"], data["password"], data["port"]))
+            return "success!"
+
+        # jika provisioning mininet
+        if data["device-type"] == "mininet":
+            os.system("export ANSIBLE_HOST_KEY_CHECKING=False")
+            os.system("ansible all -i %s, -m raw -a 'mn --topo %s,%s --switch ovsk --mac --controller=remote,ip=%s &;  exit' -u %s --extra-vars 'ansible_password=%s ansible_port=%s'" %
+                      (data["device-ip"], data["topology"], data["topology-number"], data["controller"], data["username"], data["password"], data["port"]))
             return "success!"
 
 # Admin Menu
