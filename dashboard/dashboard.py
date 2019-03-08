@@ -644,8 +644,8 @@ def provisioning_api():
         # jika provisioning mininet
         if data["device-type"] == "mininet":
             os.system("export ANSIBLE_HOST_KEY_CHECKING=False")
-            os.system("ansible all -i %s, -m raw -a 'mn --topo %s,%s --switch ovsk --mac --controller=remote,ip=%s &;  exit' -u %s --extra-vars 'ansible_password=%s ansible_port=%s'" %
-                      (data["device-ip"], data["topology"], data["topology-number"], data["controller"], data["username"], data["password"], data["port"]))
+            os.system("ansible all -i %s, -m raw -a 'mn --topo %s,%s --switch ovsk --mac --controller=remote,ip=%s &;  exit' -u %s" %
+                      (data["device-ip"], data["topology"], data["topology-number"], data["controller"], data["username"]))
             return "success!"
 
 # Admin Menu
