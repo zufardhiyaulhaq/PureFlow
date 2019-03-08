@@ -5,12 +5,15 @@ import ast
 import json
 import MySQLdb
 import requests
+import logging
 from requests.auth import HTTPBasicAuth
 
 app = Flask(__name__)
 
 db_config_raw = json.loads(open("config.json","r").read())
 db_config = {k.encode('utf8'): v.encode('utf8') for k, v in db_config_raw.items()}
+
+logging.basicConfig(level = logging.DEBUG, format = '%(asctime)s  %(levelname)-10s %(processName)s  %(name)s %(message)s', filename = "/var/log/dashboard.log")
 
 # get user table
 def db_user():
@@ -440,6 +443,7 @@ def configuring_api():
         # dump dictionary kedalam json
         api_json = json.dumps(json_data)
 
+        logging.debug(api_json)
         # push json kedalam controller
         raw = db_controller()
         url = 'http://'+raw[0][3]+':8181/onos/v1/flows/'+data['deviceid']
