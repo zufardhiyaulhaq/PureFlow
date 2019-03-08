@@ -525,7 +525,7 @@ def configuring_api():
         else:
             list = search(
                 json_data['treatment']['instructions'], key='subtype', value='TCP_SRC')
-            json_data['treatment']['instructions'][list]['ip'] = data['treatment.instructions.tcp_src.value']
+            json_data['treatment']['instructions'][list]['tcpPort'] = data['treatment.instructions.tcp_src.value']
 
         # instruction tcp dst
         # jika tidak ada data, delete, jika ada append
@@ -538,7 +538,7 @@ def configuring_api():
         else:
             list = search(
                 json_data['treatment']['instructions'], key='subtype', value='TCP_DST')
-            json_data['treatment']['instructions'][list]['ip'] = data['treatment.instructions.tcp_dst.value']
+            json_data['treatment']['instructions'][list]['tcpPort'] = data['treatment.instructions.tcp_dst.value']
 
         # instruction udp src
         # jika tidak ada data, delete, jika ada append
@@ -551,7 +551,7 @@ def configuring_api():
         else:
             list = search(
                 json_data['treatment']['instructions'], key='subtype', value='UDP_SRC')
-            json_data['treatment']['instructions'][list]['ip'] = data['treatment.instructions.udp_src.value']
+            json_data['treatment']['instructions'][list]['udpPort'] = data['treatment.instructions.udp_src.value']
 
         # instruction udp dst
         # jika tidak ada data, delete, jika ada append
@@ -564,7 +564,7 @@ def configuring_api():
         else:
             list = search(
                 json_data['treatment']['instructions'], key='subtype', value='UDP_DST')
-            json_data['treatment']['instructions'][list]['ip'] = data['treatment.instructions.udp_dst.value']
+            json_data['treatment']['instructions'][list]['udpPort'] = data['treatment.instructions.udp_dst.value']
 
         # dump dictionary kedalam json
         api_json = json.dumps(json_data)
