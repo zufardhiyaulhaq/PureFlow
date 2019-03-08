@@ -6,7 +6,7 @@ git clone https://github.com/zufardhiyaulhaq/PureFlow.git
 ```
 go to bootstrap folder and running the bash script
 ```
-cd Pureflow/bootstrap
+cd PureFlow/bootstrap/instalation
 sh install.sh
 ```
 this script will install all of **Pure**Flow files inside `/opt`
