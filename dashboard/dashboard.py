@@ -14,7 +14,7 @@ db_config_raw = json.loads(open("config.json", "r").read())
 db_config = {k.encode('utf8'): v.encode('utf8')
              for k, v in db_config_raw.items()}
 
-logging.basicConfig(level=logging.DEBUG, format='%(asctime)s  %(levelname)-10s %(processName)s  %(name)s %(message)s',
+logging.basicConfig(level=logging.INFO, format='%(asctime)s  %(levelname)-10s %(processName)s  %(name)s %(message)s',
                     filename="/var/log/dashboard.log")
 
 # get user table
@@ -152,6 +152,7 @@ def configuring_api():
 
         # variabel data diambil dari API
         data = dict((k, v) for k, v in res.iteritems() if v)
+        logging.info(data)
 
         # Priority, Permanent, is not defined in form, so we defined inside json files, soon will be update in dashboard
         # support action change only until layer3
@@ -568,7 +569,7 @@ def configuring_api():
         # dump dictionary kedalam json
         api_json = json.dumps(json_data)
 
-        logging.debug(api_json)
+        logging.info(api_json)
         # push json kedalam controller
         raw = db_controller()
         url = 'http://'+raw[0][3]+':8181/onos/v1/flows/'+data['deviceid']
