@@ -58,11 +58,6 @@ echo "Install python dashboard requirement"
 echo "============================================"
 sudo pip install -r /opt/PureFlow/dashboard/requirement.txt
 
-echo "Running dashboard program"
-echo "============================================"
-sudo systemctl enable dashboard
-sudo systemctl start dashboard
-
 echo "Install Java JRE"
 echo "============================================"
 sudo apt-get install -y default-jre
@@ -129,3 +124,7 @@ echo "============================================"
 sudo mysql -u${USERDB} -p${PASSWDDB} ${DATABASE} < /opt/PureFlow/bootstrap/instalation/pureflow.sql
 
 
+echo "Running dashboard program"
+echo "============================================"
+sudo systemctl enable dashboard
+sudo systemctl start dashboard

@@ -20,7 +20,7 @@ ssh-keygen
 ```
 your `public-key` have address in
 ```
-/root/.ssh/id-rsa.pub
+/root/.ssh/id_rsa.pub
 ```
 
 ## Update
