@@ -200,6 +200,29 @@
                                 <small class="form-text text-muted">empty if not in use</small>
                             </div>
 
+                            <div class="form-group">
+                                <label for="treatment.instructions.tcp_src">Change Source TCP</label>
+                                <input type="text" class="form-control" id="treatment_instructions_tcp_src_value" placeholder="Destination IP Address" name="treatment.instructions.tcp_src.value">
+                                <small class="form-text text-muted">empty if not in use</small>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="treatment.instructions.tcp_dst">Change Destination TCP</label>
+                                <input type="text" class="form-control" id="treatment_instructions_tcp_dst_value" placeholder="Destination IP Address" name="treatment.instructions.tcp_dst.value">
+                                <small class="form-text text-muted">empty if not in use</small>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="treatment.instructions.tcp_src">Change Source UDP</label>
+                                <input type="text" class="form-control" id="treatment_instructions_tcp_src_value" placeholder="Destination IP Address" name="treatment.instructions.tcp_src.value">
+                                <small class="form-text text-muted">empty if not in use</small>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="treatment.instructions.tcp_dst">Change Destination UDP</label>
+                                <input type="text" class="form-control" id="treatment_instructions_tcp_dst_value" placeholder="Destination IP Address" name="treatment.instructions.tcp_dst.value">
+                                <small class="form-text text-muted">empty if not in use</small>
+                            </div>
                         </div>
                     </div>
 
@@ -358,6 +381,29 @@
                                 <small class="form-text text-muted">empty if not in use</small>
                             </div>
 
+                            <div class="form-group">
+                                <label for="treatment.instructions.tcp_src">Change Source TCP</label>
+                                <input type="text" class="form-control" id="treatment_instructions_tcp_src_value" placeholder="Destination IP Address" name="treatment.instructions.tcp_src.value">
+                                <small class="form-text text-muted">empty if not in use</small>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="treatment.instructions.tcp_dst">Change Destination TCP</label>
+                                <input type="text" class="form-control" id="treatment_instructions_tcp_dst_value" placeholder="Destination IP Address" name="treatment.instructions.tcp_dst.value">
+                                <small class="form-text text-muted">empty if not in use</small>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="treatment.instructions.tcp_src">Change Source UDP</label>
+                                <input type="text" class="form-control" id="treatment_instructions_tcp_src_value" placeholder="Destination IP Address" name="treatment.instructions.tcp_src.value">
+                                <small class="form-text text-muted">empty if not in use</small>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="treatment.instructions.tcp_dst">Change Destination UDP</label>
+                                <input type="text" class="form-control" id="treatment_instructions_tcp_dst_value" placeholder="Destination IP Address" name="treatment.instructions.tcp_dst.value">
+                                <small class="form-text text-muted">empty if not in use</small>
+                            </div>
                         </div>
                     </div>
 
@@ -614,6 +660,68 @@
                     )
                     $("#form").append(
                         '<input type="hidden" id="treatment_instructions_ipv4_dst_subtype" readonly name="treatment.instructions.ipv4_dst.subtype" value="IPV4_DST">'
+                    )
+                }
+            })
+
+            $("#treatment_instructions_tcp_src_value").change(function () {
+                if ($("#treatment_instructions_tcp_src_value").val() == "") {
+                    $("#treatment_instructions_tcp_src").remove();
+                    $("#treatment_instructions_tcp_src_subtype").remove();
+                } else {
+                    $("#treatment_instructions_tcp_src").remove();
+                    $("#treatment_instructions_tcp_src_subtype").remove();
+                    $("#form").append(
+                        '<input type="hidden" id="treatment_instructions_tcp_src" readonly name="treatment.instructions.tcp_src" value="L4MODIFICATION">'
+                    )
+                    $("#form").append(
+                        '<input type="hidden" id="treatment_instructions_tcp_src_subtype" readonly name="treatment.instructions.tcp_src.subtype" value="TCP_SRC">'
+                    )
+                }
+            })
+
+            $("#treatment_instructions_tcp_dst_value").change(function () {
+                if ($("#treatment_instructions_tcp_dst_value").val() == "") {
+                    $("#treatment_instructions_tcp_dst").remove();
+                    $("#treatment_instructions_tcp_dst_subtype").remove();
+                } else {
+                    $("#treatment_instructions_tcp_dst").remove();
+                    $("#form").append(
+                        '<input type="hidden" id="treatment_instructions_tcp_dst" readonly name="treatment.instructions.tcp_dst" value="L4MODIFICATION">'
+                    )
+                    $("#form").append(
+                        '<input type="hidden" id="treatment_instructions_tcp_dst_subtype" readonly name="treatment.instructions.tcp_dst.subtype" value="TCP_DST">'
+                    )
+                }
+            })
+
+            $("#treatment_instructions_udp_src_value").change(function () {
+                if ($("#treatment_instructions_udp_src_value").val() == "") {
+                    $("#treatment_instructions_udp_src").remove();
+                    $("#treatment_instructions_udp_src_subtype").remove();
+                } else {
+                    $("#treatment_instructions_udp_src").remove();
+                    $("#treatment_instructions_udp_src_subtype").remove();
+                    $("#form").append(
+                        '<input type="hidden" id="treatment_instructions_udp_src" readonly name="treatment.instructions.udp_src" value="L4MODIFICATION">'
+                    )
+                    $("#form").append(
+                        '<input type="hidden" id="treatment_instructions_udp_src_subtype" readonly name="treatment.instructions.udp_src.subtype" value="UDP_SRC">'
+                    )
+                }
+            })
+
+            $("#treatment_instructions_udp_dst_value").change(function () {
+                if ($("#treatment_instructions_udp_dst_value").val() == "") {
+                    $("#treatment_instructions_udp_dst").remove();
+                    $("#treatment_instructions_udp_dst_subtype").remove();
+                } else {
+                    $("#treatment_instructions_udp_dst").remove();
+                    $("#form").append(
+                        '<input type="hidden" id="treatment_instructions_udp_dst" readonly name="treatment.instructions.udp_dst" value="L4MODIFICATION">'
+                    )
+                    $("#form").append(
+                        '<input type="hidden" id="treatment_instructions_udp_dst_subtype" readonly name="treatment.instructions.udp_dst.subtype" value="UDP_DST">'
                     )
                 }
             })
@@ -906,6 +1014,68 @@
                     )
                     $("#form").append(
                         '<input type="hidden" id="treatment_instructions_ipv4_dst_subtype" readonly name="treatment.instructions.ipv4_dst.subtype" value="IPV4_DST">'
+                    )
+                }
+            })
+
+            $("#treatment_instructions_tcp_src_value").change(function () {
+                if ($("#treatment_instructions_tcp_src_value").val() == "") {
+                    $("#treatment_instructions_tcp_src").remove();
+                    $("#treatment_instructions_tcp_src_subtype").remove();
+                } else {
+                    $("#treatment_instructions_tcp_src").remove();
+                    $("#treatment_instructions_tcp_src_subtype").remove();
+                    $("#form").append(
+                        '<input type="hidden" id="treatment_instructions_tcp_src" readonly name="treatment.instructions.tcp_src" value="L4MODIFICATION">'
+                    )
+                    $("#form").append(
+                        '<input type="hidden" id="treatment_instructions_tcp_src_subtype" readonly name="treatment.instructions.tcp_src.subtype" value="TCP_SRC">'
+                    )
+                }
+            })
+
+            $("#treatment_instructions_tcp_dst_value").change(function () {
+                if ($("#treatment_instructions_tcp_dst_value").val() == "") {
+                    $("#treatment_instructions_tcp_dst").remove();
+                    $("#treatment_instructions_tcp_dst_subtype").remove();
+                } else {
+                    $("#treatment_instructions_tcp_dst").remove();
+                    $("#form").append(
+                        '<input type="hidden" id="treatment_instructions_tcp_dst" readonly name="treatment.instructions.tcp_dst" value="L4MODIFICATION">'
+                    )
+                    $("#form").append(
+                        '<input type="hidden" id="treatment_instructions_tcp_dst_subtype" readonly name="treatment.instructions.tcp_dst.subtype" value="TCP_DST">'
+                    )
+                }
+            })
+
+            $("#treatment_instructions_udp_src_value").change(function () {
+                if ($("#treatment_instructions_udp_src_value").val() == "") {
+                    $("#treatment_instructions_udp_src").remove();
+                    $("#treatment_instructions_udp_src_subtype").remove();
+                } else {
+                    $("#treatment_instructions_udp_src").remove();
+                    $("#treatment_instructions_udp_src_subtype").remove();
+                    $("#form").append(
+                        '<input type="hidden" id="treatment_instructions_udp_src" readonly name="treatment.instructions.udp_src" value="L4MODIFICATION">'
+                    )
+                    $("#form").append(
+                        '<input type="hidden" id="treatment_instructions_udp_src_subtype" readonly name="treatment.instructions.udp_src.subtype" value="UDP_SRC">'
+                    )
+                }
+            })
+
+            $("#treatment_instructions_udp_dst_value").change(function () {
+                if ($("#treatment_instructions_udp_dst_value").val() == "") {
+                    $("#treatment_instructions_udp_dst").remove();
+                    $("#treatment_instructions_udp_dst_subtype").remove();
+                } else {
+                    $("#treatment_instructions_udp_dst").remove();
+                    $("#form").append(
+                        '<input type="hidden" id="treatment_instructions_udp_dst" readonly name="treatment.instructions.udp_dst" value="L4MODIFICATION">'
+                    )
+                    $("#form").append(
+                        '<input type="hidden" id="treatment_instructions_udp_dst_subtype" readonly name="treatment.instructions.udp_dst.subtype" value="UDP_DST">'
                     )
                 }
             })
