@@ -69,17 +69,17 @@ sudo apt-get install -y default-jre
 
 echo "Download ONOS"
 echo "============================================"
-wget http://repo1.maven.org/maven2/org/onosproject/onos-releases/1.13.2/onos-1.13.2.zip
+wget http://repo1.maven.org/maven2/org/onosproject/onos-releases/2.0.0/onos-2.0.0.tar.gz
 
 echo "Unzip ONOS"
 echo "============================================"
-sudo mv onos-1.13.2.zip /opt/
+sudo mv onos-2.0.0.tar.gz /opt/
 cd /opt/
-sudo unzip onos-1.13.2.zip
+sudo tar xzvf onos-2.0.0.tar.gz
 
 echo "Configuring ONOS"
 echo "============================================"
-sudo mv onos-1.13.2 onos
+sudo mv onos-2.0.0 onos
 cd onos
 sudo sed -i '/ONOS_APPS=${ONOS_APPS:-}/c\ONOS_APPS=openflow' bin/onos-service
 
