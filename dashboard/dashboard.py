@@ -605,7 +605,7 @@ def mikrotik():
 
 # provisioning mininet
 @app.route('/provisioning/mininet')
-def mikrotik():
+def mininet():
     if not session.get('logged_in'):
         return render_template('login.html')
     else:
