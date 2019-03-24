@@ -16,4 +16,4 @@ echo "Remove Data"
 echo "============================================"
 sudo rm -rf /opt/PureFlow
 sudo rm -rf /opt/onos
-sudo rm -rf /opt/onos-1.13.2.zip
+sudo rm -rf /opt/onos-2.0.0.tar.gz
