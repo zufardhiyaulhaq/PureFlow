@@ -8,6 +8,7 @@ PureFlow is platform that can provisioning device to connect to openflow control
 This is are list of supported devices :
 - OpenVSwitch
 - MikroTik
+- Mininet
 
 ## **Feature**
 ---
@@ -19,6 +20,7 @@ PureFlow Feature :
 Future Works :
 - More Devices Support
 - Bulk Provisioning
+- Delete Flow
 - Improvement in dashboard & database system
 
 ## **Architecture**
