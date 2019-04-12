@@ -5,7 +5,7 @@ sudo apt-get -y update
 
 echo "Install software-properties-common"
 echo "============================================"
-sudo apt-get install -y software-properties-common 
+sudo apt-get install -y software-properties-common default-libmysqlclient-dev
 
 echo "Add Ansible Repository"
 echo "============================================"
